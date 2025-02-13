@@ -1,28 +1,37 @@
 package com.bench;
 
-//import org.mindrot.jbcrypt.BCrypt;
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
+
     public static void main(String[] args) {
-        String password = "i love java";
-        String hashed = Bcrypt.hashpw(password, Bcrypt.gensalt(12));
-        System.out.println(hashed);
 
-        String loginPassword = "i love java";
-        if(Bcrypt.checkpw(loginPassword, hashed)){
-            System.out.println();
-        } else {
-            System.out.println();
-        }
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        String[] flavorNotes1 = {"Chocolate", "Nutty"};
+        String[] flavorNotes2 = {"Citrus", "Berry"};
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        Coffee coffee1 = new Coffee("Espresso", "Arabica", "Medium", 5.00, "Dark", "Colombia", false, 10, flavorNotes1, "Espresso");
+        Coffee coffee2 = new Coffee("Latte", "Robusta", "Large", 4.50, "Medium", "Vietnam", true, 5, flavorNotes2, "Drip");
+
+        System.out.println("Coffee 1: " + coffee1.getName());
+        System.out.println("Price for Medium size: " + coffee1.calculatePrice("Medium"));
+        System.out.println("In stock: " + coffee1.checkStock());
+        coffee1.addFlavor("Caramel");
+        System.out.println("Updated flavor notes: " + String.join(", ", coffee1.getFlavorNotes()));
+        coffee1.updateStock(5);
+        System.out.println("Updated stock: " + coffee1.getStock());
+        System.out.println("Description: " + coffee1.describe());
+        coffee1.discount(10);
+        System.out.println("Price after discount: " + coffee1.getPrice());
+
+        System.out.println();
+
+        System.out.println("Coffee 2: " + coffee2.getName());
+        System.out.println("Price for Large size: " + coffee2.calculatePrice("Large"));
+        System.out.println("In stock: " + coffee2.checkStock());
+        coffee2.addFlavor("Vanilla");
+        System.out.println("Updated flavor notes: " + String.join(", ", coffee2.getFlavorNotes()));
+        coffee2.updateStock(10);
+        System.out.println("Updated stock: " + coffee2.getStock());
+        System.out.println("Description: " + coffee2.describe());
+        coffee2.discount(5);
+        System.out.println("Price after discount: " + coffee2.getPrice());
     }
 }
