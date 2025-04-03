@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Coffee</title>
+
+    <link rel="stylesheet" th:href="@{style.css}">
+</head>
+<body>
+
+<h1>Starbucks</h1>
+<div>
+    <a href="/add">Add new coffee</a>
+    <form>
+        <input type="text" name="search" placeholder="Search...">
+        <button>Search</button>
+    </form>
+</div>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Size</th>
+        <th>Price</th>
+        <th>Roast Level</th>
+        <th>Origin</th>
+        <th>Decaf</th>
+        <th>Stock</th>
+        <th>Flavor Notes</th>
+        <th>Brew Method</th>
+        <th>Actions</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="coffee: ${coffee}">
+        <td th:text = "${coffee.id}"></td>
+        <td th:text = "${coffee.name}"></td>
+        <td th:text = "${coffee.type}"></td>
+        <td th:text = "${coffee.size}"></td>
+        <td th:text = "${coffee.price}"></td>
+        <td th:text = "${coffee.roastLevel}"></td>
+        <td th:text = "${coffee.origin}"></td>
+        <td th:text = "${coffee.decaf}"></td>
+        <td th:text = "${coffee.stock}"></td>
+        <td th:text = "${coffee.flavorNotes != null ? #strings.arrayJoin(coffee.flavorNotes, ', ') : 'No flavor notes'}"></td>
+        <td th:text = "${coffee.brewMethod}"></td>
+        <td>
+            <a th:href = "@{/delete(id=${coffee.id})}">Delete </a>
+            <a th:href="@{/edit(id=${coffee.id})}">Edit</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

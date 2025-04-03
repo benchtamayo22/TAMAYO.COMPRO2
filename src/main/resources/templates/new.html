@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{style.css}">
+    <title>New Coffee</title>
+</head>
+<body>
+<h1>New Coffee</h1>
+<div>
+    <form action="/save" method="POST">
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div>
+            <label for="type">Type:</label>
+            <input type="text" id="type" name="type" required>
+        </div>
+        <div>
+            <label for="size">Size:</label>
+            <input type="text" id="size" name="size" required>
+        </div>
+        <div>
+            <label for="price">Price:</label>
+            <input type="number" step="0.1" id="price" name="price" required>
+        </div>
+        <div>
+            <label for="roastLevel">Roast Level:</label>
+            <input type="text" id="roastLevel" name="roastLevel" required>
+        </div>
+        <div>
+            <label for="origin">Origin:</label>
+            <input type="text" id="origin" name="origin" required>
+        </div>
+        <div>
+            <label>Decaf:</label>
+            <input type="hidden" name="isDecaf" value="false">
+            <input type="checkbox" id="isDecaf" name="isDecaf" value="true">
+        </div>
+        <div>
+            <label for="stock">Stock:</label>
+            <input type="number" id="stock" name="stock" required>
+        </div>
+        <div>
+            <label for="flavorNotes">Flavor Notes (comma-separated):</label>
+            <input type="text" id="flavorNotes" name="flavorNotes" required>
+        </div>
+        <div>
+            <label for="brewMethod">Brew Method:</label>
+            <input type="text" id="brewMethod" name="brewMethod" required>
+        </div>
+        <button type="submit">Save</button>
+    </form>
+    <br>
+    <a href="/">Back to List</a>
+</div>
+</body>
+</html>
