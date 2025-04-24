@@ -10,51 +10,86 @@
 <h1>New Coffee</h1>
 <div>
     <form action="/save" method="POST">
-        <div>
+        <div class="form-group">
             <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
+            <input type="text" id="name" name="name" required minlength="2" maxlength="50"/>
         </div>
-        <div>
+
+        <div class="form-group">
             <label for="type">Type:</label>
-            <input type="text" id="type" name="type" required>
+            <select id="type" name="type" required>
+                <option value="">Choose type</option>
+                <option value="Arabica">Arabica</option>
+                <option value="Robusta">Robusta</option>
+            </select>
         </div>
-        <div>
+
+        <div class="form-group">
             <label for="size">Size:</label>
-            <input type="text" id="size" name="size" required>
+            <select id="size" name="size" required>
+                <option value="">Choose size</option>
+                <option value="Small">Small</option>
+                <option value="Medium">Medium</option>
+                <option value="Large">Large</option>
+            </select>
         </div>
-        <div>
+
+        <div class="form-group">
             <label for="price">Price:</label>
-            <input type="number" step="0.1" id="price" name="price" required>
+            <input type="number" id="price" name="price" required min="0.01" step="0.01"/>
         </div>
-        <div>
+
+        <div class="form-group">
             <label for="roastLevel">Roast Level:</label>
-            <input type="text" id="roastLevel" name="roastLevel" required>
+            <select id="roastLevel" name="roastLevel" required>
+                <option value="">Choose roast level</option>
+                <option value="Light">Light</option>
+                <option value="Medium">Medium</option>
+                <option value="Dark">Dark</option>
+            </select>
         </div>
-        <div>
+
+        <div class="form-group">
             <label for="origin">Origin:</label>
-            <input type="text" id="origin" name="origin" required>
+            <input type="text" id="origin" name="origin" maxlength="100"/>
         </div>
-        <div>
+
+        <div class="form-group">
             <label>Decaf:</label>
-            <input type="hidden" name="isDecaf" value="false">
-            <input type="checkbox" id="isDecaf" name="isDecaf" value="true">
+            <input type="hidden" name="isDecaf" value="false"/>
+            <input type="checkbox" id="isDecaf" name="isDecaf" value="true"/>
         </div>
-        <div>
+
+        <div class="form-group">
             <label for="stock">Stock:</label>
-            <input type="number" id="stock" name="stock" required>
+            <input type="number" id="stock" name="stock" required min="0"/>
         </div>
-        <div>
-            <label for="flavorNotes">Flavor Notes (comma-separated):</label>
-            <input type="text" id="flavorNotes" name="flavorNotes" required>
+
+        <div class="form-group">
+            <label>Flavor Notes:</label>
+            <div class="checkbox-group">
+                <label><input type="checkbox" name="flavorNotes" value="Chocolate"> Chocolate</label>
+                <label><input type="checkbox" name="flavorNotes" value="Citrus"> Citrus</label>
+                <label><input type="checkbox" name="flavorNotes" value="Nutty"> Nutty</label>
+                <label><input type="checkbox" name="flavorNotes" value="Fruity"> Fruity</label>
+            </div>
         </div>
-        <div>
+
+        <div class="form-group">
             <label for="brewMethod">Brew Method:</label>
-            <input type="text" id="brewMethod" name="brewMethod" required>
+            <select id="brewMethod" name="brewMethod" required>
+                <option value="">Choose brew method</option>
+                <option value="Drip">Drip</option>
+                <option value="French Press">French Press</option>
+                <option value="Espresso">Espresso</option>
+            </select>
         </div>
-        <button type="submit">Save</button>
-    </form>
-    <br>
-    <a href="/">Back to List</a>
+
+<button type="submit">Add Coffee</button>
+
+<button type="button" onclick="location.href='/'">Back to List</button>
+
+</form>
 </div>
 </body>
 </html>

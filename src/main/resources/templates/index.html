@@ -10,7 +10,6 @@
 
 <h1>Starbucks</h1>
 <div>
-    <a href="/add">Add new coffee</a>
     <form>
         <input type="text" name="search" placeholder="Search...">
         <button>Search</button>
@@ -48,11 +47,16 @@
         <td th:text = "${coffee.flavorNotes != null ? #strings.arrayJoin(coffee.flavorNotes, ', ') : 'No flavor notes'}"></td>
         <td th:text = "${coffee.brewMethod}"></td>
         <td>
-            <a th:href = "@{/delete(id=${coffee.id})}">Delete </a>
+            <a th:href ="@{/delete(id=${coffee.id})}">Delete</a>
             <a th:href="@{/edit(id=${coffee.id})}">Edit</a>
         </td>
     </tr>
     </tbody>
 </table>
+
+<div>
+    <a href="/add" class="button-link">Add New Coffee</a>
+</div>
+
 </body>
 </html>

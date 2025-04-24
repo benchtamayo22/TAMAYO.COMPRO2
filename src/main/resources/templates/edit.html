@@ -1,26 +1,85 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet" th:href="@{style.css}">
 <head>
     <title>Edit Coffee</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
 <h1>Edit Coffee</h1>
+
 <form th:action="@{/update}" method="post">
     <input type="hidden" name="id" th:value="${coffee.id}" />
-    <input type="text" name="name" th:value="${coffee.name}" placeholder="Name" required />
-    <input type="text" name="type" th:value="${coffee.type}" placeholder="Type" required />
-    <input type="text" name="size" th:value="${coffee.size}" placeholder="Size" required />
-    <input type="number" step="0.01" name="price" th:value="${coffee.price}" placeholder="Price" required />
-    <input type="text" name="roastLevel" th:value="${coffee.roastLevel}" placeholder="Roast Level" required />
-    <input type="text" name="origin" th:value="${coffee.origin}" placeholder="Origin" required />
-    <input type="checkbox" name="isDecaf" th:checked="${coffee.decaf}" value="true" /> Decaf
-    <input type="number" name="stock" th:value="${coffee.stock}" placeholder="Stock" required />
-    <input type="text" name="flavorNotes" th:value="${coffee.flavorNotes}" placeholder="Flavor Notes" required />
-    <input type="text" name="brewMethod" th:value="${coffee.brewMethod}" placeholder="Brew Method" required />
-    <button type="submit">Update Coffee</button>
-</form>
 
-<a href="/">Back to List</a>
+    <div class="form-group">
+        <label>Name:</label>
+        <input type="text" name="name" th:value="${coffee.name}" required minlength="2" maxlength="50" />
+    </div>
+
+    <div class="form-group">
+        <label>Type:</label>
+        <select name="type" required>
+            <option th:selected="${coffee.type == 'Arabica'}" value="Arabica">Arabica</option>
+            <option th:selected="${coffee.type == 'Robusta'}" value="Robusta">Robusta</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Size:</label>
+        <select name="size" required>
+            <option th:selected="${coffee.size == 'Small'}" value="Small">Small</option>
+            <option th:selected="${coffee.size == 'Medium'}" value="Medium">Medium</option>
+            <option th:selected="${coffee.size == 'Large'}" value="Large">Large</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Price:</label>
+        <input type="number" name="price" step="0.01" min="0.01" th:value="${coffee.price}" required />
+    </div>
+
+    <div class="form-group">
+        <label>Roast Level:</label>
+        <select name="roastLevel" required>
+            <option th:selected="${coffee.roastLevel == 'Light'}" value="Light">Light</option>
+            <option th:selected="${coffee.roastLevel == 'Medium'}" value="Medium">Medium</option>
+            <option th:selected="${coffee.roastLevel == 'Dark'}" value="Dark">Dark</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Origin:</label>
+        <input type="text" name="origin" th:value="${coffee.origin}" maxlength="100" />
+    </div>
+
+    <div class="form-group">
+        <label><input type="checkbox" name="isDecaf" th:checked="${coffee.decaf}" value="true" /> Decaf</label>
+    </div>
+
+    <div class="form-group">
+        <label>Stock:</label>
+        <input type="number" name="stock" th:value="${coffee.stock}" required min="0" />
+    </div>
+
+    <div class="form-group checkbox-group">
+        <label>Flavor Notes:</label>
+        <label><input type="checkbox" name="flavorNotes" value="Chocolate" th:checked="${#lists.contains(coffee.flavorNotes, 'Chocolate')}"/> Chocolate</label>
+        <label><input type="checkbox" name="flavorNotes" value="Citrus" th:checked="${#lists.contains(coffee.flavorNotes, 'Citrus')}"/> Citrus</label>
+        <label><input type="checkbox" name="flavorNotes" value="Nutty" th:checked="${#lists.contains(coffee.flavorNotes, 'Nutty')}"/> Nutty</label>
+    </div>
+
+    <div class="form-group">
+        <label>Brew Method:</label>
+        <select name="brewMethod" required>
+            <option th:selected="${coffee.brewMethod == 'Drip'}" value="Drip">Drip</option>
+            <option th:selected="${coffee.brewMethod == 'French Press'}" value="French Press">French Press</option>
+            <option th:selected="${coffee.brewMethod == 'Espresso'}" value="Espresso">Espresso</option>
+        </select>
+    </div>
+
+    <button type="submit">Update Coffee</button>
+
+    <button type="button" onclick="location.href='/'">Back to List</button>
+
+</form>
 </body>
 </html>
