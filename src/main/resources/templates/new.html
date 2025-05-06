@@ -1,32 +1,35 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" th:href="@{style.css}">
+    <link rel="stylesheet" th:href="@{/style.css}">
     <title>New Coffee</title>
 </head>
 <body>
 <h1>New Coffee</h1>
 <div>
-    <form action="/save" method="POST">
-        <div class="form-group">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required minlength="2" maxlength="50"/>
+    <form th:action="@{/save}" method="POST" enctype="multipart/form-data" th:object="${newCoffee}">
+
+        <div>
+            <label for="name">Name</label>
+            <input type="text" id="name" th:field="*{name}" required minlength="2" maxlength="50"
+                   th:classappend="${#fields.hasErrors('name')} ? 'error' : ''"/>
+            <p class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
         </div>
 
-        <div class="form-group">
-            <label for="type">Type:</label>
-            <select id="type" name="type" required>
+        <div>
+            <label for="type">Type</label>
+            <select id="type" th:field="*{type}" required>
                 <option value="">Choose type</option>
                 <option value="Arabica">Arabica</option>
                 <option value="Robusta">Robusta</option>
             </select>
         </div>
 
-        <div class="form-group">
-            <label for="size">Size:</label>
-            <select id="size" name="size" required>
+        <div>
+            <label for="size">Size</label>
+            <select id="size" th:field="*{size}" required>
                 <option value="">Choose size</option>
                 <option value="Small">Small</option>
                 <option value="Medium">Medium</option>
@@ -34,14 +37,16 @@
             </select>
         </div>
 
-        <div class="form-group">
-            <label for="price">Price:</label>
-            <input type="number" id="price" name="price" required min="0.01" step="0.01"/>
+        <div>
+            <label for="price">Price</label>
+            <input type="number" id="price" th:field="*{price}" step="0.01" min="0.01" required
+                   th:classappend="${#fields.hasErrors('price')} ? 'error' : ''"/>
+            <p class="error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>
         </div>
 
-        <div class="form-group">
-            <label for="roastLevel">Roast Level:</label>
-            <select id="roastLevel" name="roastLevel" required>
+        <div>
+            <label for="roastLevel">Roast Level</label>
+            <select id="roastLevel" th:field="*{roastLevel}" required>
                 <option value="">Choose roast level</option>
                 <option value="Light">Light</option>
                 <option value="Medium">Medium</option>
@@ -49,35 +54,32 @@
             </select>
         </div>
 
-        <div class="form-group">
-            <label for="origin">Origin:</label>
-            <input type="text" id="origin" name="origin" maxlength="100"/>
+        <div>
+            <label for="origin">Origin</label>
+            <input type="text" id="origin" th:field="*{origin}" maxlength="100"/>
         </div>
 
-        <div class="form-group">
-            <label>Decaf:</label>
-            <input type="hidden" name="isDecaf" value="false"/>
-            <input type="checkbox" id="isDecaf" name="isDecaf" value="true"/>
+        <div>
+            <label for="isDecaf">Decaf</label>
+            <input type="checkbox" id="isDecaf" th:field="*{decaf}" />
         </div>
 
-        <div class="form-group">
-            <label for="stock">Stock:</label>
-            <input type="number" id="stock" name="stock" required min="0"/>
+        <div>
+            <label for="stock">Stock</label>
+            <input type="number" id="stock" th:field="*{stock}" min="0" required/>
         </div>
 
-        <div class="form-group">
+        <div>
             <label>Flavor Notes:</label>
-            <div class="checkbox-group">
-                <label><input type="checkbox" name="flavorNotes" value="Chocolate"> Chocolate</label>
-                <label><input type="checkbox" name="flavorNotes" value="Citrus"> Citrus</label>
-                <label><input type="checkbox" name="flavorNotes" value="Nutty"> Nutty</label>
-                <label><input type="checkbox" name="flavorNotes" value="Fruity"> Fruity</label>
-            </div>
+            <label><input type="checkbox" th:field="*{flavorNotes}" value="Chocolate"/> Chocolate</label>
+            <label><input type="checkbox" th:field="*{flavorNotes}" value="Citrus"/> Citrus</label>
+            <label><input type="checkbox" th:field="*{flavorNotes}" value="Nutty"/> Nutty</label>
+            <label><input type="checkbox" th:field="*{flavorNotes}" value="Fruity"/> Fruity</label>
         </div>
 
-        <div class="form-group">
-            <label for="brewMethod">Brew Method:</label>
-            <select id="brewMethod" name="brewMethod" required>
+        <div>
+            <label for="brewMethod">Brew Method</label>
+            <select id="brewMethod" th:field="*{brewMethod}" required>
                 <option value="">Choose brew method</option>
                 <option value="Drip">Drip</option>
                 <option value="French Press">French Press</option>
@@ -85,10 +87,11 @@
             </select>
         </div>
 
-        <button type="submit">Save</button>
+        <div class="action">
+            <a th:href="@{/}" class="button cancel">Cancel</a>
+            <button type="submit">Save</button>
+        </div>
     </form>
-    <br>
-    <a href="/">Back to List</a>
 </div>
 </body>
 </html>

@@ -7,13 +7,11 @@
     <link rel="stylesheet" th:href="@{style.css}">
 </head>
 <body>
-
 <h1>Starbucks</h1>
-<div>
-    <a href="/add">Add new coffee</a>
-    <form>
-        <input type="text" name="search" placeholder="Search...">
-        <button>Search</button>
+<div class="search-container">
+    <form action="/search" method="get">
+        <input type="text" name="keyword" placeholder="Search coffee...">
+        <button type="submit">Search</button>
     </form>
 </div>
 <table>
@@ -54,5 +52,10 @@
     </tr>
     </tbody>
 </table>
+
+<div>
+    <a href="/add" class="button-link">Add New Coffee</a>
+</div>
+
 </body>
 </html>

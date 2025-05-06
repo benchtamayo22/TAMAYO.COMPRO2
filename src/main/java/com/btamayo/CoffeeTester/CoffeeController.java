@@ -1,83 +1,54 @@
 package com.btamayo.CoffeeTester;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Controller
 public class CoffeeController {
 
-    private final CoffeeService coffeeService;
+    @Autowired
+    private CoffeeService coffeeService;
 
-    public CoffeeController(CoffeeService coffeeService) {
-        this.coffeeService = coffeeService;
+    // Home page - displays all coffees
+    @GetMapping("/")
+    public String viewHomePage(Model model) {
+        model.addAttribute("coffees", coffeeService.getCoffeeExamList());
+        return "index"; // make sure this is your main HTML page
     }
 
-
-    /**
-     *
-     * @param search used to search for the variable that is wanted by the user
-     * @param model used to add attributes
-     * @return it returns te main page of the program
-     */
-    @GetMapping("/")
-    public String index(@RequestParam(defaultValue = "") String search, Model model) {
-//        List<CoffeeExam> coffeeList = coffeeService.searchCoffee(search);
-//        model.addAttribute("coffees", coffeeList);
-        model.addAttribute("coffee", coffeeService.searchCoffee(search));
-
+    // 🔍 Search handler
+    @GetMapping("/search")
+    public String searchCoffee(@RequestParam("keyword") String keyword, Model model) {
+        List<CoffeeExam> result = coffeeService.searchCoffee(keyword);
+        model.addAttribute("coffees", result);
         return "index";
     }
 
-    /**
-     *
-     * @param id - (int) id of the coffee
-     * @return - deletes the coffee that is listed
-     */
-    @GetMapping("/delete")
-    public String deleteCoffee(@RequestParam int id){
-        coffeeService.deleteCoffeeExam(id);
-        return "redirect:/";
-    }
-
-    /**
-     *
-     * @return - goes to the new html for the adding of new coffee
-     */
+    // ➕ Show add coffee form
     @GetMapping("/add")
-    public String add(){
-        return "new";
+    public String addCoffeeForm(Model model) {
+        model.addAttribute("newCoffee", new CoffeeExam());
+        return "new"; // this should be your add form page (new.html)
     }
 
-    /**
-     *
-     * @param name (String) name of the coffee
-     * @param type (String) type of the coffee
-     * @param size (String) size of the coffee
-     * @param price (int) price for the coffee
-     * @param roastLevel (String) roast level of the coffee
-     * @param origin (String) origin of the coffee
-     * @param isDecaf (boolean) is it decaf or not?
-     * @param stock (int) stock for the coffee
-     * @param flavorNotes (String) flavor notes for the coffee
-     * @param brewMethod (String) brewing method for the coffee
-     * @return returns to the main page where the coffee is listed
-     */
+    // 💾 Save new coffee
     @PostMapping("/save")
-    public String save(@RequestParam String name,
-                       @RequestParam String type,
-                       @RequestParam String size,
-                       @RequestParam double price,
-                       @RequestParam String roastLevel,
-                       @RequestParam String origin,
-                       @RequestParam Boolean isDecaf,
-                       @RequestParam int stock,
-                       @RequestParam String flavorNotes,
-                       @RequestParam String brewMethod){
+    public String saveCoffee(@RequestParam String name,
+                             @RequestParam String type,
+                             @RequestParam String size,
+                             @RequestParam double price,
+                             @RequestParam String roastLevel,
+                             @RequestParam String origin,
+                             @RequestParam Boolean isDecaf,
+                             @RequestParam int stock,
+                             @RequestParam List<String> flavorNotes,
+                             @RequestParam String brewMethod) {
+
         CoffeeExam c = new CoffeeExam();
         c.setId(coffeeService.getId() + 1);
         c.setName(name);
@@ -88,71 +59,57 @@ public class CoffeeController {
         c.setOrigin(origin);
         c.setDecaf(isDecaf);
         c.setStock(stock);
-        c.setFlavorNotes(Arrays.asList(flavorNotes.split(";")));
+        c.setFlavorNotes(flavorNotes);
         c.setBrewMethod(brewMethod);
 
         coffeeService.addCoffee(c);
         return "redirect:/";
     }
 
-    /**
-     *
-     * @param id - (int) id of the coffee
-     * @param model - used to display the properties of the coffee
-     * @return - goes to the edit.html and allows the user to edit the desired property of the coffee
-     */
+    // 🗑️ Delete coffee
+    @GetMapping("/delete")
+    public String deleteCoffee(@RequestParam int id) {
+        coffeeService.deleteCoffeeExam(id);
+        return "redirect:/";
+    }
+
+    // ✏️ Show edit form
     @GetMapping("/edit")
-    public String edit(@RequestParam int id, Model model) {
+    public String editCoffee(@RequestParam int id, Model model) {
         CoffeeExam c = coffeeService.getCoffee(id);
-        if(c != null){
+        if (c != null) {
             model.addAttribute("coffee", c);
-            return "edit";
+            return "edit"; // edit form page (edit.html)
         }
         return "redirect:/";
     }
 
-    /**
-     *
-     * @param id - (id) id of the coffee
-     * @param name - (String) name of the coffee
-     * @param type - (String) type of the coffee
-     * @param size - (String) size of the coffee
-     * @param price - (int) price for the coffee
-     * @param roastLevel - (String) roast level of the coffee
-     * @param origin - (String) origin of the coffee
-     * @param isDecaf - (boolean) is it decaf or not?
-     * @param stock - (int) stock for the coffee
-     * @param flavorNotes - (String) flavor notes for the coffee
-     * @param brewMethod - (String) brewing method for the coffee
-     * @return - allows the page to recognize updates made in the edit.html and shows it in the main page after updating
-     */
+    // 🔁 Update existing coffee
     @PostMapping("/update")
-    public String update(@RequestParam int id,
-                         @RequestParam String name,
-                         @RequestParam String type,
-                         @RequestParam String size,
-                         @RequestParam double price,
-                         @RequestParam String roastLevel,
-                         @RequestParam String origin,
-                         @RequestParam(required = false) Boolean isDecaf,
-                         @RequestParam int stock,
-                         @RequestParam String flavorNotes,
-                         @RequestParam String brewMethod) {
+    public String updateCoffee(@RequestParam int id,
+                               @RequestParam String name,
+                               @RequestParam String type,
+                               @RequestParam String size,
+                               @RequestParam double price,
+                               @RequestParam String roastLevel,
+                               @RequestParam String origin,
+                               @RequestParam(required = false) Boolean isDecaf,
+                               @RequestParam int stock,
+                               @RequestParam String flavorNotes,
+                               @RequestParam String brewMethod) {
 
         CoffeeExam c = coffeeService.getCoffee(id);
-        if(c != null){
+        if (c != null) {
             c.setName(name);
             c.setType(type);
             c.setSize(size);
             c.setPrice(price);
             c.setRoastLevel(roastLevel);
             c.setOrigin(origin);
-            if(isDecaf != null){
-                c.setDecaf(isDecaf);
-            }
+            c.setDecaf(isDecaf != null && isDecaf);
             c.setStock(stock);
             if (flavorNotes != null && !flavorNotes.isEmpty()) {
-                c.setFlavorNotes(Arrays.asList(flavorNotes.split(",")));
+                c.setFlavorNotes(Arrays.asList(flavorNotes.split(";")));
             }
             c.setBrewMethod(brewMethod);
 
