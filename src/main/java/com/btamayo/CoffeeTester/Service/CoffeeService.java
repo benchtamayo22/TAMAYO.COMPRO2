@@ -1,5 +1,6 @@
 package com.btamayo.CoffeeTester;
 
+import com.btamayo.CoffeeTester.Models.CoffeeExam;
 import org.springframework.stereotype.Service;
 import java.io.*;
 import java.util.ArrayList;
