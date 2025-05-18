@@ -1,6 +1,5 @@
 package com.btamayo.CoffeeTester;
 
-import com.btamayo.CoffeeTester.Models.CoffeeExam;
 import org.springframework.stereotype.Service;
 import java.io.*;
 import java.util.ArrayList;
@@ -10,7 +9,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class CoffeeService {
-    private List<CoffeeExam> coffeeExamList;
+    private List<Coffee> coffeeExamList;
     private final String FILE_NAME = "database.csv";
 
     public CoffeeService() {
@@ -18,16 +17,16 @@ public class CoffeeService {
         readFromDisk();
     }
 
-    public List<CoffeeExam> getCoffeeExamList() {
+    public List<Coffee> getCoffeeList() {
         return coffeeExamList;
     }
 
-    public void deleteCoffeeExam(int id) {
+    public void deleteCoffee(int id) {
         coffeeExamList.removeIf(coffeeExam -> coffeeExam.getId() == id);
         writeToDisk();
     }
 
-    public List<CoffeeExam> searchCoffee(String keyword){
+    public List<Coffee> searchCoffee(String keyword){
         if(keyword.trim().isEmpty()){
             return new ArrayList<>(coffeeExamList);
         }
@@ -43,15 +42,15 @@ public class CoffeeService {
         ).collect(Collectors.toList());
     }
 
-    public CoffeeExam getCoffee(int id){
-        for(CoffeeExam s: coffeeExamList){
+    public Coffee getCoffee(int id){
+        for(Coffee s: coffeeExamList){
             if(s.getId() == id)
                 return s;
         }
         return null;
     }
 
-    public void updateCoffee(int id, CoffeeExam update){
+    public void updateCoffee(int id, Coffee update){
         for(int i = 0; i < coffeeExamList.size(); i++){
             if(coffeeExamList.get(i).getId() == id){
                 coffeeExamList.set(i, update);
@@ -61,7 +60,7 @@ public class CoffeeService {
         }
     }
 
-    public void addCoffee(CoffeeExam coffeeExam){
+    public void addCoffee(Coffee coffeeExam){
         coffeeExamList.add(coffeeExam);
         writeToDisk();
     }
@@ -77,7 +76,7 @@ public class CoffeeService {
         try(BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_NAME))){
             //write the content of the arraylist into csv
             System.out.println("Writing to file");
-            for(CoffeeExam s : coffeeExamList){
+            for(Coffee s : coffeeExamList){
                 String line = s.getId() + ","
                         + s.getName() + ","
                         + s.getType() + ","
@@ -113,7 +112,7 @@ public class CoffeeService {
             while((line = br.readLine()) != null){
                 String[] data = line.split(",");
 
-                CoffeeExam c = new CoffeeExam();
+                Coffee c = new Coffee();
                 c.setId(Integer.parseInt(data[0]));
                 c.setName(data[1]);
                 c.setType(data[2]);

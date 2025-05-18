@@ -1,142 +1,54 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f8f8;
-    margin: 0;
-    padding: 40px;
+/* Container for the entire layout */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-.header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+/* Updated heading */
+h1 {
+    color: #00704a;
+    text-align: center;
     margin-bottom: 20px;
 }
 
-h1 {
-    color: #00704a;
-    margin-left: 10px;
-    place-self: center;
-}
-
-a {
-    text-decoration: none;
-    color: #00704a;
-    padding: 5px 10px;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-a:hover {
-    background-color: #00704a;
-    color: white;
-}
-
-button {
-    background-color: #00704a;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 15px;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-button:hover {
-    background-color: white;
-    color: #00704a;
-}
-
-form {
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    margin: 20px 0;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-input[type="text"],
-input[type="number"],
-select {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    transition: border-color 0.3s;
-}
-
-input[type="text"]:focus,
-input[type="number"]:focus,
-select:focus {
-    border-color: #00704a;
-}
-
-.checkbox-group label {
-    display: block;
-    margin: 5px 0;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-th, td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    background-color: #00704a;
-    color: white;
-}
-
-tr:hover {
-    background-color: #f1f1f1;
-}
-
-.button-link {
+/* Updated Add New Coffee button */
+.coffee-btn {
     display: inline-block;
     background-color: #00704a;
     color: white;
-    border: none;
-    border-radius: 5px;
     padding: 10px 15px;
-    margin-top: 15px;
-    text-align: center;
+    border-radius: 5px;
     text-decoration: none;
     font-size: 14px;
-    cursor: pointer;
+    margin-bottom: 20px;
     transition: background-color 0.3s, color 0.3s;
 }
 
-.button-link:hover {
+.coffee-btn:hover {
     background-color: white;
     color: #00704a;
     border: 1px solid #00704a;
 }
 
-.search-container {
+/* New search bar container and form */
+.search-bar-container {
     display: flex;
-    flex-direction: column;
-    align-items: center; /* Center children horizontally */
     justify-content: center;
-    text-align: center;
+    margin-bottom: 20px;
 }
 
-.search-container form {
+.search-bar-container form {
     display: flex;
     gap: 10px;
-    justify-content: center;
     flex-wrap: wrap;
 }
 
-.search-container input[type="text"] {
+/* Search input */
+.search-bar {
     padding: 10px 15px;
     width: 250px;
     border: 2px solid #ccc;
@@ -145,12 +57,13 @@ tr:hover {
     transition: border-color 0.3s;
 }
 
-.search-container input[type="text"]:focus {
-    border-color: #4caf50;
+.search-bar:focus {
+    border-color: #00704a;
     outline: none;
 }
 
-.search-container button {
+/* Search button */
+.search-btn {
     padding: 10px 20px;
     background-color: #00704a;
     border: none;
@@ -161,9 +74,148 @@ tr:hover {
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.search-container button:hover {
+.search-btn:hover {
     background-color: white;
     color: #00704a;
     border: 1px solid #00704a;
 }
 
+/* Buttons in table (Edit/Delete) */
+.btn {
+    display: inline-block;
+    background-color: #00704a;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 13px;
+    margin-right: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn:hover {
+    background-color: white;
+    color: #00704a;
+    border: 1px solid #00704a;
+}
+
+/* Container for the coffee form */
+.form-container {
+    max-width: 600px;
+    margin: 40px auto;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Form fields and labels */
+.form-container form > div {
+    margin-bottom: 15px;
+}
+
+.form-container label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-container input[type="text"],
+.form-container input[type="number"],
+.form-container select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 15px;
+    transition: border-color 0.3s;
+}
+
+.form-container input[type="text"]:focus,
+.form-container input[type="number"]:focus,
+.form-container select:focus {
+    border-color: #00704a;
+    outline: none;
+}
+
+/* Error styling for validation */
+input.error, select.error {
+    border-color: red;
+}
+
+p.error {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+/* Checkbox layout for flavor notes */
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 8px;
+}
+
+/* Submit and Back buttons */
+.form-container button[type="submit"],
+.form-container a {
+    background-color: #00704a;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    text-decoration: none;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.form-container button[type="submit"]:hover,
+.form-container a:hover {
+    background-color: white;
+    color: #00704a;
+    border: 1px solid #00704a;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+/* Header Styling */
+table th {
+    background-color: #f4f4f4;
+    color: #333;
+    padding: 12px 10px;
+    text-align: left;
+    border-bottom: 2px solid #ddd;
+}
+
+/* Row Styling */
+table td {
+    padding: 12px 10px;
+    border-bottom: 1px solid #eee;
+    vertical-align: top;
+}
+
+/* Add zebra-striping for rows (optional but improves readability) */
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Action buttons cell */
+table td:last-child {
+    white-space: nowrap;
+}
