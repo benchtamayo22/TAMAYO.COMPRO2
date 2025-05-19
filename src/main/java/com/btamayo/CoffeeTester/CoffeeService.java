@@ -3,114 +3,142 @@ package com.btamayo.CoffeeTester;
 import org.springframework.stereotype.Service;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 @Service
 public class CoffeeService {
-    private List<Coffee> coffeeExamList;
-    private final String FILE_NAME = "database.csv";
+    private ArrayList<Coffee> coffees;
+    private final String FILE_NAME = "data/coffee_database.csv";
 
+    /**
+     * Initializes the coffee list and loads data from disk.
+     */
     public CoffeeService() {
-        coffeeExamList = new ArrayList<>();
+        coffees = new ArrayList<>();
         readFromDisk();
     }
 
-    public List<Coffee> getCoffeeList() {
-        return coffeeExamList;
+    /**
+     * Returns the list of all coffees.
+     */
+    public ArrayList<Coffee> getCoffees() {
+        return coffees;
     }
 
+    /**
+     * Deletes a coffee entry by ID.
+     */
     public void deleteCoffee(int id) {
-        coffeeExamList.removeIf(coffeeExam -> coffeeExam.getId() == id);
+        coffees.removeIf(c -> c.getId() == id);
         writeToDisk();
     }
 
-    public List<Coffee> searchCoffee(String keyword){
-        if(keyword.trim().isEmpty()){
-            return new ArrayList<>(coffeeExamList);
+    /**
+     * Searches for coffees by a keyword across multiple fields.
+     */
+    public List<Coffee> searchCoffee(String keyword) {
+        if (keyword == null || keyword.trim().isEmpty()) {
+            return coffees;
         }
 
-        return coffeeExamList.stream().filter(s ->
-                s.getName() != null && s.getName().toLowerCase().contains(keyword.toLowerCase())
-                        || s.getType() != null && s.getType().toLowerCase().contains(keyword.toLowerCase())
-                        || s.getSize() != null && s.getSize().toLowerCase().contains(keyword.toLowerCase())
-                        || s.getBrewMethod() != null && s.getBrewMethod().toLowerCase().contains(keyword.toLowerCase())
-                        || s.getFlavorNotes() != null && s.getFlavorNotes().contains(keyword.toLowerCase())
-                        || s.getRoastLevel() != null && s.getRoastLevel().toLowerCase().contains(keyword.toLowerCase())
-                        || s.getOrigin() != null && s.getOrigin().toLowerCase().contains(keyword.toLowerCase())
+        String lower = keyword.toLowerCase();
+        return coffees.stream().filter(c ->
+                c.getName().toLowerCase().contains(lower) ||
+                        c.getType().toLowerCase().contains(lower) ||
+                        c.getSize().toLowerCase().contains(lower) ||
+                        c.getRoastLevel().toLowerCase().contains(lower) ||
+                        c.getOrigin().toLowerCase().contains(lower) ||
+                        c.getFlavorNotes().toString().toLowerCase().contains(lower) ||
+                        c.getBrewMethod().toLowerCase().contains(lower) ||
+                        (c.isDecaf() && (lower.contains("decaf") || lower.contains("decaffeinated")))
         ).collect(Collectors.toList());
     }
 
-    public Coffee getCoffee(int id){
-        for(Coffee s: coffeeExamList){
-            if(s.getId() == id)
-                return s;
+    /**
+     * Retrieves a coffee by its ID.
+     */
+    public Coffee getCoffee(int id) {
+        for (Coffee c : coffees) {
+            if (c.getId() == id)
+                return c;
         }
         return null;
     }
 
-    public void updateCoffee(int id, Coffee update){
-        for(int i = 0; i < coffeeExamList.size(); i++){
-            if(coffeeExamList.get(i).getId() == id){
-                coffeeExamList.set(i, update);
+    /**
+     * Updates an existing coffee entry.
+     */
+    public void updateCoffee(int id, Coffee update) {
+        for (int i = 0; i < coffees.size(); i++) {
+            if (coffees.get(i).getId() == id) {
+                coffees.set(i, update);
                 writeToDisk();
                 break;
             }
         }
     }
 
-    public void addCoffee(Coffee coffeeExam){
-        coffeeExamList.add(coffeeExam);
+    /**
+     * Adds a new coffee entry and assigns a new ID.
+     */
+    public void addCoffee(Coffee coffee) {
+        coffee.setId(getLastId() + 1);
+        coffees.add(coffee);
         writeToDisk();
     }
 
-    public int getId(){
-        if(coffeeExamList.isEmpty()){
+    /**
+     * Returns the highest ID currently in the coffee list.
+     */
+    public int getLastId() {
+        if (coffees.isEmpty()) {
             return 0;
         }
-        return coffeeExamList.get(coffeeExamList.size() - 1).getId();
+        return coffees.get(coffees.size() - 1).getId();
     }
 
-    public void writeToDisk(){
-        try(BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_NAME))){
-            //write the content of the arraylist into csv
-            System.out.println("Writing to file");
-            for(Coffee s : coffeeExamList){
-                String line = s.getId() + ","
-                        + s.getName() + ","
-                        + s.getType() + ","
-                        + s.getSize() + ","
-                        + s.getPrice() + ","
-                        + s.getRoastLevel() + ","
-                        + s.getOrigin() + ","
-                        + s.isDecaf() + ","
-                        + s.getStock() + ","
-                        +  s.getBrewMethod() + ","
-                        + String.join(";",s.getFlavorNotes() != null ? s.getFlavorNotes() : new ArrayList<>());
-                bw.write(line);
+    /**
+     * Saves all coffee data to disk in CSV format.
+     */
+    public void writeToDisk() {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_NAME))) {
+            for (Coffee c : coffees) {
+                bw.write(c.getId() + ","
+                        + c.getName() + ","
+                        + c.getType() + ","
+                        + c.getSize() + ","
+                        + c.getPrice() + ","
+                        + c.getRoastLevel() + ","
+                        + c.getOrigin() + ","
+                        + c.isDecaf() + ","
+                        + c.getStock() + ","
+                        + c.getBrewMethod() + ","
+                        + c.getCoffeePicture() + ","
+                        + String.join(";", c.getFlavorNotes()));
                 bw.newLine();
             }
-            System.out.println("Done writing to file");
-        }catch(IOException e){
-            System.out.println("Woah! Error: " + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("Uh-oh! Error writing: " + e.getMessage());
         }
     }
 
     /**
-     * This read the CSV file and loads it to the students ArrayList
+     * Loads coffee data from the CSV file if it exists.
      */
-    public void readFromDisk(){
+    public void readFromDisk() {
         File file = new File(FILE_NAME);
-        if(!file.exists()){
-            System.out.println("file not found");
+        if (!file.exists()) {
+            System.out.println("No coffee file found.");
             return;
         }
 
-        try(BufferedReader br = new BufferedReader(new FileReader(file))){
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
-            while((line = br.readLine()) != null){
+            while ((line = br.readLine()) != null) {
                 String[] data = line.split(",");
+                if (data.length < 11) continue;
 
                 Coffee c = new Coffee();
                 c.setId(Integer.parseInt(data[0]));
@@ -123,13 +151,19 @@ public class CoffeeService {
                 c.setDecaf(Boolean.parseBoolean(data[7]));
                 c.setStock(Integer.parseInt(data[8]));
                 c.setBrewMethod(data[9]);
-                c.setFlavorNotes(data[10].isEmpty() ? new ArrayList<>() : new ArrayList<>(Arrays.asList(data[10].split(","))));
-                //add coffee to the list
-                coffeeExamList.add(c);
+                c.setCoffeePicture(data[10]);
+
+                // Handle FlavorNotes
+                if (data.length >= 12 && !data[11].isEmpty()) {
+                    c.setFlavorNotes(data[11].trim());
+                } else {
+                    c.setFlavorNotes(""); // Empty string if no flavor notes
+                }
+
+                coffees.add(c);
             }
-            System.out.println("Done reading from file");
-        }catch(IOException e){
-            System.out.println("Wow! Error: " + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("Uh-oh! Error reading: " + e.getMessage());
         }
     }
 }

@@ -1,0 +1,120 @@
+:root {
+    --font-sans: 'Inter', system-ui, sans-serif;
+    --color-bg: #f3f7f5;                 /* soft background */
+    --color-surface: #ffffff;            /* clean surface */
+    --color-primary: #00704a;            /* Starbucks green */
+    --color-primary-hover: #005c3b;      /* darker green hover */
+    --color-text: #1e3932;               /* deep greenish text */
+    --color-border: #c3d4cc;             /* light border */
+    --color-error: #e53935;              /* attention red */
+    --input-bg: #f5fbf7;                 /* light green-tinted input */
+    --border-radius: 0.75rem;
+    --transition: all 0.2s ease-in-out;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-sans);
+    background: var(--color-bg);
+    color: var(--color-text);
+    margin: 0;
+    padding: 2rem;
+}
+
+.login-container {
+    max-width: 420px;
+    margin: 4rem auto;
+    background: var(--color-surface);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.login-container h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.75rem;
+    color: var(--color-primary);
+}
+
+.login-container label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.login-container input[type="text"],
+.login-container input[type="password"] {
+    width: 100%;
+    padding: 0.65rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    font-family: inherit;
+    font-size: 1rem;
+    background: var(--input-bg);
+    color: var(--color-text);
+    margin-bottom: 1rem;
+}
+
+.login-container input:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(0, 112, 74, 0.2);
+    outline: none;
+}
+
+input.error {
+    border: 2px solid var(--color-error);
+    background-color: #fcecec;
+    color: #b00020;
+}
+
+.login-container .error {
+    color: var(--color-error);
+    font-size: 0.875rem;
+    margin-top: -0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.login-container .actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.login-container button {
+    width: 100%;
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 0.75rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.login-container button:hover {
+    background: var(--color-primary-hover);
+}
+
+.login-container .forgot-password {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.login-container .forgot-password a {
+    font-size: 0.9rem;
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.login-container .forgot-password a:hover {
+    text-decoration: underline;
+}

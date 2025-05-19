@@ -1,40 +1,171 @@
-/* Container for the entire layout */
+:root {
+    --font-sans: 'Inter', system-ui, sans-serif;
+    --color-bg: #f1f8f4;
+    --color-surface: #ffffff;
+    --color-primary: #00704a;
+    --color-primary-hover: #005c3b;
+    --color-text: #1e3932;
+    --color-muted: #a4b9a4;
+    --color-border: #ccc;
+    --color-error: #e53935;
+    --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    --border-radius: 10px;
+    --transition: all 0.3s ease-in-out;
+}
+
+body {
+    margin: 0;
+    padding: 2rem;
+    font-family: var(--font-sans);
+    background: var(--color-bg);
+    color: var(--color-text);
+}
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 40px 20px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    background-color: var(--color-surface);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
 }
 
-/* Updated heading */
+/* Headings */
 h1 {
-    color: #00704a;
+    color: var(--color-primary);
     text-align: center;
     margin-bottom: 20px;
 }
 
-/* Updated Add New Coffee button */
-.coffee-btn {
-    display: inline-block;
-    background-color: #00704a;
+/* Form container */
+.form-container {
+    max-width: 720px;
+    margin: 2rem auto;
+    background: var(--color-surface);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+/* Responsive grid layout */
+form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem 2rem;
+}
+
+form > div.full {
+    grid-column: 1 / -1;
+}
+
+/* Form labels */
+form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: var(--color-text);
+}
+
+/* Inputs */
+form input[type="text"],
+form input[type="number"],
+form select,
+form textarea,
+form input[type="file"] {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    background: #f5fbf7;
+    color: var(--color-text);
+    font-size: 15px;
+    transition: var(--transition);
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+    border-color: var(--color-primary);
+    outline: none;
+}
+
+/* Checkbox styling */
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Error handling */
+input.error, select.error, textarea.error {
+    border-color: var(--color-error);
+    background: #fdecea;
+}
+
+.error {
+    color: var(--color-error);
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+/* Action area */
+.action {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+}
+
+/* Buttons */
+.button,
+.form-container button[type="submit"],
+.form-container a,
+.btn,
+.search-btn {
+    background-color: var(--color-primary);
     color: white;
     padding: 10px 15px;
-    border-radius: 5px;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
     text-decoration: none;
-    font-size: 14px;
-    margin-bottom: 20px;
+    cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
 }
 
-.coffee-btn:hover {
+.button:hover,
+.form-container button[type="submit"]:hover,
+.form-container a:hover,
+.btn:hover,
+.search-btn:hover {
     background-color: white;
-    color: #00704a;
-    border: 1px solid #00704a;
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
 }
 
-/* New search bar container and form */
+.button.cancel {
+    background: #be123c;
+}
+
+.button.cancel:hover {
+    background: #9f1239;
+}
+
+/* Coffee-style small button */
+.btn {
+    padding: 6px 12px;
+    font-size: 13px;
+    margin-right: 5px;
+}
+
+/* Search bar */
 .search-bar-container {
     display: flex;
     justify-content: center;
@@ -47,7 +178,6 @@ h1 {
     flex-wrap: wrap;
 }
 
-/* Search input */
 .search-bar {
     padding: 10px 15px;
     width: 250px;
@@ -58,135 +188,11 @@ h1 {
 }
 
 .search-bar:focus {
-    border-color: #00704a;
+    border-color: var(--color-primary);
     outline: none;
 }
 
-/* Search button */
-.search-btn {
-    padding: 10px 20px;
-    background-color: #00704a;
-    border: none;
-    border-radius: 8px;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.search-btn:hover {
-    background-color: white;
-    color: #00704a;
-    border: 1px solid #00704a;
-}
-
-/* Buttons in table (Edit/Delete) */
-.btn {
-    display: inline-block;
-    background-color: #00704a;
-    color: white;
-    padding: 6px 12px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-size: 13px;
-    margin-right: 5px;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.btn:hover {
-    background-color: white;
-    color: #00704a;
-    border: 1px solid #00704a;
-}
-
-/* Container for the coffee form */
-.form-container {
-    max-width: 600px;
-    margin: 40px auto;
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
-
-/* Form fields and labels */
-.form-container form > div {
-    margin-bottom: 15px;
-}
-
-.form-container label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #333;
-}
-
-.form-container input[type="text"],
-.form-container input[type="number"],
-.form-container select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 15px;
-    transition: border-color 0.3s;
-}
-
-.form-container input[type="text"]:focus,
-.form-container input[type="number"]:focus,
-.form-container select:focus {
-    border-color: #00704a;
-    outline: none;
-}
-
-/* Error styling for validation */
-input.error, select.error {
-    border-color: red;
-}
-
-p.error {
-    color: red;
-    font-size: 0.9em;
-    margin-top: 5px;
-}
-
-/* Checkbox layout for flavor notes */
-.checkbox-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.checkbox-item {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    margin-bottom: 8px;
-}
-
-/* Submit and Back buttons */
-.form-container button[type="submit"],
-.form-container a {
-    background-color: #00704a;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 6px;
-    font-size: 15px;
-    text-decoration: none;
-    margin-top: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.form-container button[type="submit"]:hover,
-.form-container a:hover {
-    background-color: white;
-    color: #00704a;
-    border: 1px solid #00704a;
-}
-
-/* Table Styling */
+/* Table styling */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -194,7 +200,6 @@ table {
     font-size: 14px;
 }
 
-/* Header Styling */
 table th {
     background-color: #f4f4f4;
     color: #333;
@@ -203,19 +208,35 @@ table th {
     border-bottom: 2px solid #ddd;
 }
 
-/* Row Styling */
 table td {
     padding: 12px 10px;
     border-bottom: 1px solid #eee;
     vertical-align: top;
 }
 
-/* Add zebra-striping for rows (optional but improves readability) */
 table tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
-/* Action buttons cell */
 table td:last-child {
     white-space: nowrap;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .action {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .button,
+    .button.cancel {
+        width: 100%;
+    }
 }

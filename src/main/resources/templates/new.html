@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="stylesheet" th:href="@{/form.css}">
     <title>New Coffee</title>
 </head>
 <body>
 
 <div class="form-container">
     <h1>New Coffee</h1>
-    <form action="/save" method="POST" th:object="${coffee}">
+    <form th:action="@{/save}" th:object="${coffee}" method="POST" enctype="multipart/form-data">
         <div>
             <label for="name">Name:</label>
             <input type="text" id="name" th:field="*{name}" placeholder="Enter coffee name"
@@ -36,8 +36,7 @@
 
         <div>
             <label for="price">Price:</label>
-            <input type="number" step="0.01" id="price" th:field="*{price}"
-                   th:classappend="${#fields.hasErrors('price')} ? 'error' : ''">
+            <input type="number" step="0.01" id="price" th:field="*{price}" th:classappend="${#fields.hasErrors('price')} ? 'error' : ''">
             <p class="error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>
         </div>
 
@@ -51,8 +50,7 @@
 
         <div>
             <label for="origin">Origin:</label>
-            <input type="text" id="origin" th:field="*{origin}"
-                   th:classappend="${#fields.hasErrors('origin')} ? 'error' : ''">
+            <input type="text" id="origin" th:field="*{origin}" th:classappend="${#fields.hasErrors('origin')} ? 'error' : ''">
             <p class="error" th:if="${#fields.hasErrors('origin')}" th:errors="*{origin}"></p>
         </div>
 
@@ -67,8 +65,7 @@
 
         <div>
             <label for="stock">Stock:</label>
-            <input type="number" id="stock" th:field="*{stock}"
-                   th:classappend="${#fields.hasErrors('stock')} ? 'error' : ''">
+            <input type="number" id="stock" th:field="*{stock}" th:classappend="${#fields.hasErrors('stock')} ? 'error' : ''">
             <p class="error" th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}"></p>
         </div>
 
@@ -104,10 +101,16 @@
             </select>
         </div>
 
-        <button type="submit">Save</button>
-    </form>
+        <div>
+            <label for="imageFile">Profile Picture:</label>
+            <input type="file" id="imageFile" name="imageFile"/>
+        </div>
 
-    <a href="/" class="btn">Back to List</a>
+        <div class="action">
+            <a href="/" class="button cancel">Back to List</a>
+            <button type="submit" class="button">Submit</button>
+        </div>
+    </form>
 </div>
 
 </body>

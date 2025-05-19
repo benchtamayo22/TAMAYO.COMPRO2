@@ -1,20 +1,27 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" th:href="@{/style.css}">
     <title>Coffee List</title>
 </head>
 <body>
 
 <div class="container">
     <h1>Coffee Ordering</h1>
+
+    <!-- Logout Button -->
+    <div class="logout-container">
+        <a href="/logout" class="logout-btn">Logout</a>
+    </div>
+
     <a href="/add" class="coffee-btn">Add New Coffee</a>
 
+    <!-- Search Bar -->
     <div class="search-bar-container">
-        <form action="/search" method="get">
-            <input type="text" name="keyword" class="search-bar" placeholder="Search coffee...">
+        <form action="/" method="get">
+            <input type="text" name="search" class="search-bar" placeholder="Search coffee...">
             <button type="submit" class="search-btn">Search</button>
         </form>
     </div>
@@ -37,7 +44,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="coffee, stat : ${coffees}">
+        <tr th:each="coffee, stat:${coffees}">
             <td>[[${stat.count}]]</td>
             <td th:text="${coffee.name}"></td>
             <td th:text="${coffee.type}"></td>
@@ -45,13 +52,16 @@
             <td th:text="'$' + ${coffee.price}"></td>
             <td th:text="${coffee.roastLevel}"></td>
             <td th:text="${coffee.origin}"></td>
-            <td th:text="${coffee.decaf} ? 'Yes' : 'No'"></td>
+            <td th:text="${coffee.isDecaf ? 'Yes' : 'No'}"></td>
             <td th:text="${coffee.stock}"></td>
             <td th:text="${coffee.flavorNotes != null ? #strings.arrayJoin(coffee.flavorNotes, ', ') : 'No flavor notes'}"></td>
             <td th:text="${coffee.brewMethod}"></td>
             <td>
-                <a th:href="@{/edit(id=${coffee.id})}" class="btn">Edit</a>
-                <a th:href="@{/delete(id=${coffee.id})}" class="btn">Delete</a>
+                <div class="actions">
+                    <a th:href="@{/coffee/{id}(id=${coffee.id})}"  class="view">View</a>
+                    <a th:href="@{/edit(id=${coffee.id})}" class="edit">Edit</a>
+                    <a th:href="@{/delete(id=${coffee.id})}" class="delete">Delete</a>
+                </div>
             </td>
         </tr>
         </tbody>

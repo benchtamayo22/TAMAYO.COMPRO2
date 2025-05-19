@@ -1,0 +1,153 @@
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --font-sans: 'Inter', system-ui, sans-serif;
+
+    --color-bg: #f3f7f5;               /* light background */
+    --color-surface: #ffffff;          /* clean white surface */
+    --color-primary: #00704a;          /* Starbucks green */
+    --color-primary-hover: #005c3b;    /* dark green on hover */
+    --color-text: #1e3932;             /* strong greenish-black */
+    --color-error: #e53935;            /* brighter red for visibility */
+    --color-border: #c3d4cc;           /* soft muted border */
+    --input-bg: #f5fbf7;               /* soft green tint */
+    --border-radius: 0.75rem;
+    --transition: all 0.2s ease-in-out;
+}
+
+body {
+    font-family: var(--font-sans);
+    background: var(--color-bg);
+    color: var(--color-text);
+    margin: 0;
+    padding: 2rem;
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: var(--color-primary);
+}
+
+form {
+    background: var(--color-surface);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    max-width: 720px;
+    margin: auto;
+}
+
+form > div {
+    margin-bottom: 1.25rem;
+}
+
+label {
+    display: inline-block;
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"],
+select,
+textarea {
+    width: 100%;
+    padding: 0.65rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    font-family: inherit;
+    font-size: 1rem;
+    background: var(--input-bg);
+    color: var(--color-text);
+    transition: var(--transition);
+}
+
+select {
+    appearance: none;
+    background-color: var(--input-bg);
+    background-image: url("data:image/svg+xml,%3Csvg fill='none' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5H7z' fill='%231e3932'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1rem;
+    padding-right: 2.5rem;
+    cursor: pointer;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(0, 112, 74, 0.3);
+}
+
+textarea {
+    resize: vertical;
+}
+
+input[type="radio"] {
+    margin-right: 0.5rem;
+}
+
+.error {
+    color: var(--color-error);
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+input.error,
+select.error,
+textarea.error {
+    border-color: var(--color-error);
+    background-color: #fbe9e7;
+}
+
+button,
+a.button {
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+button:hover,
+.button:hover {
+    background: var(--color-primary-hover);
+}
+
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+div.action {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.button.cancel {
+    background: #be123c;
+    color: white;
+}
+
+.button.cancel:hover {
+    background: #9f1239;
+}
