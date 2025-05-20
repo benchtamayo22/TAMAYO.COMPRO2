@@ -1,18 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@400;600;700&display=swap');
+
 :root {
     --font-sans: 'Inter', system-ui, sans-serif;
-    --color-bg: #f1f8f4;
-    --color-surface: #ffffff;
-    --color-primary: #00704a;
-    --color-primary-hover: #005c3b;
-    --color-text: #1e3932;
-    --color-muted: #a4b9a4;
-    --color-border: #ccc;
-    --color-error: #e53935;
+    --color-bg: #f1f8f4;               /* light creamy background */
+    --color-surface: #ffffff;          /* white card surfaces */
+    --color-primary: #00704a;          /* Starbucks deep green */
+    --color-primary-hover: #005c3b;    /* darker green hover */
+    --color-text: #1e3932;             /* dark green text */
+    --color-muted: #a4b9a4;            /* muted green text */
+    --color-border: #ccc;              /* soft grey border */
+    --color-error: #e53935;            /* error red */
     --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     --border-radius: 10px;
     --transition: all 0.3s ease-in-out;
 }
 
+/* Base body styles */
 body {
     margin: 0;
     padding: 2rem;
@@ -21,6 +24,7 @@ body {
     color: var(--color-text);
 }
 
+/* Container styling */
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -31,10 +35,11 @@ body {
 }
 
 /* Headings */
-h1 {
+h1, h2, h3 {
     color: var(--color-primary);
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
 }
 
 /* Form container */
@@ -47,7 +52,7 @@ h1 {
     box-shadow: var(--box-shadow);
 }
 
-/* Responsive grid layout */
+/* Form layout: grid 2 columns */
 form {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -58,15 +63,15 @@ form > div.full {
     grid-column: 1 / -1;
 }
 
-/* Form labels */
+/* Labels */
 form label {
     display: block;
     margin-bottom: 0.5rem;
-    font-weight: bold;
+    font-weight: 600;
     color: var(--color-text);
 }
 
-/* Inputs */
+/* Inputs and selects */
 form input[type="text"],
 form input[type="number"],
 form select,
@@ -76,7 +81,7 @@ form input[type="file"] {
     padding: 10px 15px;
     border: 1px solid var(--color-border);
     border-radius: 6px;
-    background: #f5fbf7;
+    background: #f5fbf7; /* very light green */
     color: var(--color-text);
     font-size: 15px;
     transition: var(--transition);
@@ -87,9 +92,10 @@ form select:focus,
 form textarea:focus {
     border-color: var(--color-primary);
     outline: none;
+    box-shadow: 0 0 5px rgba(0,112,74,0.5);
 }
 
-/* Checkbox styling */
+/* Checkbox groups */
 .checkbox-group {
     display: flex;
     flex-wrap: wrap;
@@ -102,7 +108,7 @@ form textarea:focus {
     gap: 5px;
 }
 
-/* Error handling */
+/* Error styles */
 input.error, select.error, textarea.error {
     border-color: var(--color-error);
     background: #fdecea;
@@ -114,7 +120,7 @@ input.error, select.error, textarea.error {
     margin-top: 0.25rem;
 }
 
-/* Action area */
+/* Action buttons container */
 .action {
     grid-column: 1 / -1;
     display: flex;
@@ -150,6 +156,7 @@ input.error, select.error, textarea.error {
     border: 1px solid var(--color-primary);
 }
 
+/* Cancel button variant */
 .button.cancel {
     background: #be123c;
 }
@@ -158,14 +165,14 @@ input.error, select.error, textarea.error {
     background: #9f1239;
 }
 
-/* Coffee-style small button */
+/* Smaller coffee-style buttons */
 .btn {
     padding: 6px 12px;
     font-size: 13px;
     margin-right: 5px;
 }
 
-/* Search bar */
+/* Search bar styling */
 .search-bar-container {
     display: flex;
     justify-content: center;
@@ -181,7 +188,7 @@ input.error, select.error, textarea.error {
 .search-bar {
     padding: 10px 15px;
     width: 250px;
-    border: 2px solid #ccc;
+    border: 2px solid var(--color-border);
     border-radius: 8px;
     font-size: 16px;
     transition: border-color 0.3s;
@@ -198,20 +205,25 @@ table {
     border-collapse: collapse;
     margin-top: 20px;
     font-size: 14px;
+    background: var(--color-surface);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
 }
 
 table th {
     background-color: #f4f4f4;
-    color: #333;
+    color: var(--color-text);
     padding: 12px 10px;
     text-align: left;
     border-bottom: 2px solid #ddd;
+    font-weight: 600;
 }
 
 table td {
     padding: 12px 10px;
     border-bottom: 1px solid #eee;
     vertical-align: top;
+    color: var(--color-text);
 }
 
 table tr:nth-child(even) {
@@ -222,7 +234,7 @@ table td:last-child {
     white-space: nowrap;
 }
 
-/* Mobile adjustments */
+/* Responsive styles */
 @media (max-width: 768px) {
     form {
         display: flex;

@@ -1,16 +1,17 @@
-package com.btamayo.CoffeeTester;
+package com.btamayo.CoffeeTester.service;
 
+import com.btamayo.CoffeeTester.models.Coffee;
 import org.springframework.stereotype.Service;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 @Service
 public class CoffeeService {
     private ArrayList<Coffee> coffees;
-    private final String FILE_NAME = "data/coffee_database.csv";
+    private final String FILE_NAME = "Data/coffee_database.csv";
 
     /**
      * Initializes the coffee list and loads data from disk.
@@ -50,7 +51,7 @@ public class CoffeeService {
                         c.getSize().toLowerCase().contains(lower) ||
                         c.getRoastLevel().toLowerCase().contains(lower) ||
                         c.getOrigin().toLowerCase().contains(lower) ||
-                        c.getFlavorNotes().toString().toLowerCase().contains(lower) ||
+                        c.getFlavorNotes().toLowerCase().contains(lower) ||
                         c.getBrewMethod().toLowerCase().contains(lower) ||
                         (c.isDecaf() && (lower.contains("decaf") || lower.contains("decaffeinated")))
         ).collect(Collectors.toList());
@@ -116,7 +117,7 @@ public class CoffeeService {
                         + c.getStock() + ","
                         + c.getBrewMethod() + ","
                         + c.getCoffeePicture() + ","
-                        + String.join(";", c.getFlavorNotes()));
+                        + c.getFlavorNotes().replace(",", ";"));
                 bw.newLine();
             }
         } catch (IOException e) {
@@ -137,7 +138,8 @@ public class CoffeeService {
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] data = line.split(",");
+                String[] data = line.split(",", -1); // Retain empty strings
+
                 if (data.length < 11) continue;
 
                 Coffee c = new Coffee();
@@ -153,11 +155,10 @@ public class CoffeeService {
                 c.setBrewMethod(data[9]);
                 c.setCoffeePicture(data[10]);
 
-                // Handle FlavorNotes
                 if (data.length >= 12 && !data[11].isEmpty()) {
                     c.setFlavorNotes(data[11].trim());
                 } else {
-                    c.setFlavorNotes(""); // Empty string if no flavor notes
+                    c.setFlavorNotes("");
                 }
 
                 coffees.add(c);

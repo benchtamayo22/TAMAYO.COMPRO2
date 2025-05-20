@@ -1,4 +1,4 @@
-package com.btamayo.CoffeeTester;
+package com.btamayo.CoffeeTester.models;
 
 import jakarta.validation.constraints.NotBlank;
 
@@ -8,6 +8,7 @@ public class CoffeeUser {
     @NotBlank(message = "Password should not be blank")
     private String password;
 
+    // Getters and setters
     public String getUsername() {
         return username;
     }
@@ -23,4 +24,5 @@ public class CoffeeUser {
     public void setPassword(String password) {
         this.password = password;
     }
+
 }

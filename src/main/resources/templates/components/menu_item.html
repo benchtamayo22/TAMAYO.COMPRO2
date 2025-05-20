@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Starbucks-Inspired Sidebar Menu Item Fragment -->
+<th:block th:fragment="menuItem(url, label, class, activeMenu)">
+    <li th:attr="data-url=${url}" th:classappend="${class} + (${activeMenu == class ? ' active' : ''})"
+        class="menu-item">
+        <a th:href="@{${url}}" class="menu-link">
+            <!-- Optional: Use a more minimal SVG or custom icon here -->
+            <svg class="menu-icon" width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" stroke="#00704A" stroke-width="2"/>
+                <circle cx="12" cy="12" r="4" fill="#00704A"/>
+            </svg>
+
+            <span class="menu-label" th:text="${label}"></span>
+        </a>
+    </li>
+</th:block>

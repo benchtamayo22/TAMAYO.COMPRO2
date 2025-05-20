@@ -1,5 +1,6 @@
-package com.btamayo.CoffeeTester;
+package com.btamayo.CoffeeTester.service;
 
+import com.btamayo.CoffeeTester.models.CoffeeUser;
 import jakarta.annotation.PostConstruct;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;

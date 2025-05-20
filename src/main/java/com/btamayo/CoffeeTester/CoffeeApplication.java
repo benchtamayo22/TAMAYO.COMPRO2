@@ -8,7 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class CoffeeApplication {
 
 	public static void main(String[] args) {
-		run();
+		//run();
 		SpringApplication.run(CoffeeApplication.class, args);
 	}
 

@@ -1,0 +1,97 @@
+/* Main layout */
+main {
+    padding: 2rem 1rem;
+    background-color: #f3f1e7;  /* Light Starbucks-inspired background */
+    min-height: 100vh;
+}
+
+/* Header style */
+h1 {
+    color: #b4c974;             /* warm green */
+    margin-bottom: 2rem;
+    text-align: left;
+    font-size: 4.2rem;          /* Starbucks-inspired emphasis */
+    font-weight: 600;
+    letter-spacing: -1px;
+}
+
+/* Grid of cards */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    padding-bottom: 2rem;
+    justify-items: center;
+}
+
+/* Coffee card styling */
+.card-coffee {
+    background: #2a2e26;        /* dark earthy tone */
+    border-radius: 14px;
+    padding: 1.5rem;
+    color: #e3e3d8;
+    text-align: center;
+    width: 100%;
+    max-width: 300px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover effect */
+.card-coffee:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+/* Coffee image styling */
+.coffee-image {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 1.2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Coffee name */
+.card-coffee h3 {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    color: #d5e892;             /* warm green accent */
+    font-weight: 500;
+}
+
+/* Description / price / type */
+.card-coffee p {
+    font-size: 1rem;
+    color: #cccfc3;
+    margin: 0.4rem 0;
+}
+
+/* Strong label (like bolded price) */
+.card-coffee strong {
+    color: #e3e3d8;
+    font-weight: bold;
+}
+
+/* Smooth scrollbar (hidden on WebKit) */
+.card-grid::-webkit-scrollbar {
+    display: none;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+    .card-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+
+    .card-coffee {
+        padding: 1rem;
+        max-width: 100%;
+    }
+
+    h1 {
+        font-size: 3rem;
+    }
+}

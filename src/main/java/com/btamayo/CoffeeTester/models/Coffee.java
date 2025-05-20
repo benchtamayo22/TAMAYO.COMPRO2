@@ -1,24 +1,28 @@
-package com.btamayo.CoffeeTester;
+package com.btamayo.CoffeeTester.models;
 
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.*;
+
+import java.beans.Transient;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Coffee {
 
     private int id;
 
-    @NotBlank(message = "Coffee name is required")
+    @NotBlank(message = "Name is required")
     private String name;
 
-    @NotBlank(message = "Coffee type is required")
+    @NotBlank(message = "Type is required")
     private String type;
 
-    @NotBlank(message = "Coffee size is required")
+    @NotBlank(message = "Size is required")
     private String size;
 
-    @DecimalMin(value = "0.1", message = "Price must be greater than 0")
-    private double price;
+    @NotNull(message = "Price is required")
+    @DecimalMin(value = "0.01", message = "Price must be positive")
+    private Double price;
 
     @NotBlank(message = "Roast level is required")
     private String roastLevel;
@@ -26,35 +30,24 @@ public class Coffee {
     @NotBlank(message = "Origin is required")
     private String origin;
 
-    private boolean isDecaf;
+    private boolean decaf;
 
-    @Min(value = 0, message = "Stock cannot be negative")
-    private int stock;
-
-    private String flavorNotes;
+    @NotNull(message = "Stock is required")
+    @Min(value = 0, message = "Stock must be 0 or more")
+    private Integer stock;
 
     @NotBlank(message = "Brew method is required")
     private String brewMethod;
 
     private String coffeePicture;
 
-    public Coffee() {}
+    // Flavor notes stored as CSV string in service, but model as List<String> for UI convenience
+    private String flavorNotes = "";
 
-    public Coffee(int id, String name, String type, String size, double price, String roastLevel,
-                  String origin, boolean isDecaf, int stock, String flavorNotes, String brewMethod, String coffeePicture) {
-        this.id = id;
-        this.name = name;
-        this.type = type;
-        this.size = size;
-        this.price = price;
-        this.roastLevel = roastLevel;
-        this.origin = origin;
-        this.isDecaf = isDecaf;
-        this.stock = stock;
-        this.flavorNotes = flavorNotes;
-        this.brewMethod = brewMethod;
-        this.coffeePicture = coffeePicture;
+    public Coffee() {
     }
+
+    // Getters and setters for all fields
 
     public int getId() {
         return id;
@@ -88,11 +81,11 @@ public class Coffee {
         this.size = size;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -113,27 +106,19 @@ public class Coffee {
     }
 
     public boolean isDecaf() {
-        return isDecaf;
+        return decaf;
     }
 
-    public void setDecaf(boolean isDecaf) {
-        this.isDecaf = isDecaf;
+    public void setDecaf(boolean decaf) {
+        this.decaf = decaf;
     }
 
-    public int getStock() {
+    public Integer getStock() {
         return stock;
     }
 
-    public void setStock(int stock) {
+    public void setStock(Integer stock) {
         this.stock = stock;
-    }
-
-    public String getFlavorNotes() {
-        return flavorNotes;
-    }
-
-    public void setFlavorNotes(String flavorNotes) {
-        this.flavorNotes = flavorNotes;
     }
 
     public String getBrewMethod() {
@@ -151,4 +136,25 @@ public class Coffee {
     public void setCoffeePicture(String coffeePicture) {
         this.coffeePicture = coffeePicture;
     }
+
+    public String getFlavorNotes() {
+        return flavorNotes;
+    }
+
+    public void setFlavorNotes(String flavorNotes) {
+        this.flavorNotes = flavorNotes;
+    }
+
+    // If using JPA; otherwise just note this won't persist
+    private List<String> flavorNotesList = new ArrayList<>();
+
+    public List<String> getFlavorNotesList() {
+        return flavorNotesList;
+    }
+
+    public void setFlavorNotesList(List<String> flavorNotesList) {
+        this.flavorNotesList = flavorNotesList;
+        this.flavorNotes = String.join(",", flavorNotesList);  // sync string version
+    }
+
 }

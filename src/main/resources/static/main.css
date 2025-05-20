@@ -1,0 +1,200 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@400;600;700&display=swap');
+
+:root {
+    --font-family: "Poppins", sans-serif;
+    --bg-color: #f3f1e7;               /* Light creamy background */
+    --text-color: #2a2e26;             /* Deep earthy text */
+    --accent-color: #b4c974;           /* Starbucks green accent */
+    --sidebar-bg: #1f2e1f;             /* Dark green sidebar */
+    --sidebar-text: #d5e8d4;           /* Muted green text */
+    --sidebar-hover: #324d32;          /* Hover color */
+    --shadow-color: rgba(0, 0, 0, 0.15);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--bg-color);
+    display: grid;
+    grid-template-columns: 306px 1fr;
+    grid-template-rows: 100vh;
+    grid-template-areas: "sidebar main";
+    color: var(--text-color);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    transition: all 0.3s ease;
+}
+
+aside {
+    grid-area: sidebar;
+    background-color: var(--sidebar-bg);
+    padding: 36px 28px 78px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    overflow: hidden;
+}
+
+.sidebar {
+    color: var(--sidebar-text);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.sidebar .brand {
+    margin-bottom: 64px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand img {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+}
+
+.brand span {
+    font-weight: 700;
+    font-size: 24px;
+    color: var(--accent-color);
+}
+
+.sidebar .menu {
+    flex-grow: 1;
+}
+
+.sidebar .menu ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sidebar .menu li {
+    color: var(--sidebar-text);
+    padding: 12px 18px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar .menu li:hover,
+.sidebar .menu li.active {
+    background-color: var(--sidebar-hover);
+    color: #fff;
+}
+
+.sidebar .menu li svg {
+    margin-right: 14px;
+    width: 24px;
+    height: 24px;
+    fill: var(--sidebar-text);
+    transition: fill 0.3s ease;
+}
+
+.sidebar .menu li:hover svg,
+.sidebar .menu li.active svg {
+    fill: #fff;
+}
+
+.sidebar .menu li span:last-child {
+    margin-left: auto;
+    color: var(--sidebar-text);
+    transition: color 0.3s ease;
+}
+
+.sidebar .menu li.active span:last-child {
+    color: #fff;
+}
+
+/* User Profile */
+.user-profile {
+    margin-top: auto;
+    padding: 16px 0 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.user-profile img {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-profile h1 {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--sidebar-text);
+    line-height: 1.2;
+}
+
+.user-profile span {
+    font-size: 12px;
+    color: #aaa;
+}
+
+/* Main content */
+main {
+    grid-area: main;
+    padding: 71px;
+    background-color: var(--bg-color);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow-y: auto;
+    min-width: 0;
+}
+
+.main-content {
+    padding: 0 5vw;
+    width: 100%;
+    margin: 0 auto;
+    max-width: 100%;
+    word-break: break-word;
+}
+
+/* Headings */
+h1 {
+    color: var(--text-color);
+    font-weight: 700;
+    font-size: 3rem;
+    margin: 1vw 0;
+}
+
+/* Responsive: Collapse Sidebar */
+@media (max-width: 768px) {
+    body {
+        grid-template-columns: 102px 1fr;
+    }
+
+    .brand span,
+    .menu > ul > li > span,
+    .user-profile > div {
+        display: none;
+    }
+
+    svg {
+        margin-right: 0;
+        width: 24px;
+        height: 24px;
+        flex-grow: 1;
+    }
+}

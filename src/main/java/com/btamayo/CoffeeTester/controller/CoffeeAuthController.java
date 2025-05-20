@@ -1,5 +1,7 @@
-package com.btamayo.CoffeeTester;
+package com.btamayo.CoffeeTester.controller;
 
+import com.btamayo.CoffeeTester.models.CoffeeUser;
+import com.btamayo.CoffeeTester.service.CoffeeUserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +22,16 @@ public class CoffeeAuthController {
     @GetMapping("/login")
     public String login(Model model) {
         model.addAttribute("coffeeUser", new CoffeeUser());
-        return "login";
+        return "components/login";
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute("coffeeUser") @Valid CoffeeUser coffeeUser, BindingResult bindingResult, HttpSession session, Model model) {
+    public String login(@ModelAttribute("coffeeUser") @Valid CoffeeUser coffeeUser,
+                        BindingResult bindingResult,
+                        HttpSession session,
+                        Model model) {
         if (bindingResult.hasErrors()) {
-            return "login";
+            return "components/login";
         }
 
         CoffeeUser foundUser = coffeeUserService.findByUsername(coffeeUser.getUsername());
@@ -37,7 +42,7 @@ public class CoffeeAuthController {
             model.addAttribute("error", "Invalid credentials");
         }
 
-        return "login";
+        return "components/login";
     }
 
     @GetMapping("/logout")

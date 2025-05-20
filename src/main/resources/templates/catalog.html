@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/main :: html(content=~{::main}, link=~{::link}, title=~{::title})}">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Coffee Menu</title>
+
+    <!-- Static path to CSS (Starbucks-style convention) -->
+    <link rel="stylesheet" th:href="@{/coffee-menu.css}" />
+</head>
+<body>
+
+<main>
+    <h1>Our Coffee Catalog</h1>
+    <div class="card-grid">
+        <!-- Loop and call the fragment for each coffee -->
+        <div th:each="coffee : ${coffees}">
+            <div th:replace="components/coffee-card :: coffeeCardFragment(coffee=${coffee})"></div>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>
