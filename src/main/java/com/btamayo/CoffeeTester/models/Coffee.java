@@ -1,26 +1,24 @@
 package com.btamayo.CoffeeTester.models;
 
-import jakarta.validation.constraints.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 public class Coffee {
 
     private int id;
 
-    @NotBlank(message = "Name is required")
+    @NotBlank(message = "Coffee name is required")
     private String name;
 
-    @NotBlank(message = "Type is required")
+    @NotBlank(message = "Coffee type is required")
     private String type;
 
-    @NotBlank(message = "Size is required")
+    @NotBlank(message = "Coffee size is required")
     private String size;
 
-    @NotNull(message = "Price is required")
-    @DecimalMin(value = "0.01", message = "Price must be positive")
-    private Double price;
+    @DecimalMin(value = "0.1", message = "Price must be greater than 0")
+    private double price;
 
     @NotBlank(message = "Roast level is required")
     private String roastLevel;
@@ -28,27 +26,36 @@ public class Coffee {
     @NotBlank(message = "Origin is required")
     private String origin;
 
-    private boolean decaf;
+    private boolean isDecaf;
 
-    @NotNull(message = "Stock is required")
-    @Min(value = 0, message = "Stock must be 0 or more")
-    private Integer stock;
+    @Min(value = 0, message = "Stock cannot be negative")
+    private int stock;
+
+    private String flavorNotes;
 
     @NotBlank(message = "Brew method is required")
     private String brewMethod;
 
     private String coffeePicture;
 
-    // For storage (CSV string)
-    private String flavorNotes;
 
-    // For UI binding
-    private List<String> flavorNotesList = new ArrayList<>();
+    public Coffee() {}
 
-    public Coffee() {
+    public Coffee(int id, String name, String type, String size, double price, String roastLevel,
+                  String origin, boolean isDecaf, int stock, String flavorNotes, String brewMethod, String coffeePicture) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.size = size;
+        this.price = price;
+        this.roastLevel = roastLevel;
+        this.origin = origin;
+        this.isDecaf = isDecaf;
+        this.stock = stock;
+        this.flavorNotes = flavorNotes;
+        this.brewMethod = brewMethod;
+        this.coffeePicture = coffeePicture;
     }
-
-    // --- Getters and Setters ---
 
     public int getId() {
         return id;
@@ -82,11 +89,11 @@ public class Coffee {
         this.size = size;
     }
 
-    public Double getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -107,19 +114,27 @@ public class Coffee {
     }
 
     public boolean isDecaf() {
-        return decaf;
+        return isDecaf;
     }
 
-    public void setDecaf(boolean decaf) {
-        this.decaf = decaf;
+    public void setDecaf(boolean isDecaf) {
+        this.isDecaf = isDecaf;
     }
 
-    public Integer getStock() {
+    public int getStock() {
         return stock;
     }
 
-    public void setStock(Integer stock) {
+    public void setStock(int stock) {
         this.stock = stock;
+    }
+
+    public String getFlavorNotes() {
+        return flavorNotes;
+    }
+
+    public void setFlavorNotes(String flavorNotes) {
+        this.flavorNotes = flavorNotes;
     }
 
     public String getBrewMethod() {
@@ -134,29 +149,8 @@ public class Coffee {
         return coffeePicture;
     }
 
-    public void setCoffeePicture(String coffeePicture) {
-        this.coffeePicture = coffeePicture;
+    public void setCoffeePicture(String profilePicture) {
+        this.coffeePicture = profilePicture;
     }
 
-    public String getFlavorNotes() {
-        return flavorNotes;
-    }
-
-    public void setFlavorNotes(String flavorNotes) {
-        this.flavorNotes = flavorNotes;
-        if (flavorNotes != null && !flavorNotes.isEmpty()) {
-            this.flavorNotesList = Arrays.asList(flavorNotes.split(","));
-        } else {
-            this.flavorNotesList = new ArrayList<>();
-        }
-    }
-
-    public List<String> getFlavorNotesList() {
-        return flavorNotesList;
-    }
-
-    public void setFlavorNotesList(List<String> flavorNotesList) {
-        this.flavorNotesList = flavorNotesList;
-        this.flavorNotes = String.join(",", flavorNotesList);
-    }
 }

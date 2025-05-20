@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/main :: html(content=~{::main}, link=~{::link}, title=~{::title})}">
+<head>
+    <link rel="stylesheet" th:href="@{/form.css}" />
+    <title>New Coffee</title>
+</head>
+
+<main>
+    <h1>New Coffee</h1>
+    <div>
+        <form th:action="@{/save}" th:object="${coffee}" method="POST" enctype="multipart/form-data">
+            <div class="form-row">
+                <label for="name">Name:</label>
+                <input type="text" id="name" th:field="*{name}" placeholder="Enter coffee name"
+                       th:classappend="${#fields.hasErrors('name')} ? 'error' : ''">
+            </div>
+
+            <div class="form-row">
+                <label for="type">Type:</label>
+                <select id="type" th:field="*{type}">
+                    <option value="" disabled selected>-- Please Select --</option>
+                    <option th:each="type : ${types}" th:value="${type}" th:text="${type}"></option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <label for="size">Size:</label>
+                <select id="size" th:field="*{size}">
+                    <option value="" disabled selected>-- Please Select --</option>
+                    <option th:each="size : ${sizes}" th:value="${size}" th:text="${size}"></option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <label for="price">Price:</label>
+                <input type="number" step="0.01" id="price" th:field="*{price}">
+            </div>
+
+            <div class="form-row">
+                <label for="roastLevel">Roast Level:</label>
+                <select id="roastLevel" th:field="*{roastLevel}">
+                    <option value="" disabled selected>-- Please Select --</option>
+                    <option th:each="level : ${roastLevels}" th:value="${level}" th:text="${level}"></option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <label for="origin">Origin:</label>
+                <input type="text" id="origin" th:field="*{origin}">
+            </div>
+
+            <div class="form-row">
+                <label for="isDecaf">Decaf:</label>
+                <select id="isDecaf" th:field="*{decaf}">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <label for="stock">Stock:</label>
+                <input type="number" id="stock" th:field="*{stock}">
+            </div>
+
+            <div class="form-row">
+                <label class="flavor-label">Flavor Notes:</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="flavor" value="chocolate"> Chocolate</label>
+                    <label><input type="checkbox" name="flavor" value="roasted"> Roasted</label>
+                    <label><input type="checkbox" name="flavor" value="mint"> Mint</label>
+                    <label><input type="checkbox" name="flavor" value="caramel"> Caramel</label>
+                    <label><input type="checkbox" name="flavor" value="herbal"> Herbal</label>
+                    <label><input type="checkbox" name="flavor" value="nutty"> Nutty</label>
+                </div>
+            </div>
+
+
+            <div class="form-row">
+                <label for="brewMethods">Brew Method:</label>
+                <select id="brewMethods" th:field="*{brewMethod}">
+                    <option value="" disabled selected>-- Please Select --</option>
+                    <option th:each="method : ${brewMethods}" th:value="${method}" th:text="${method}"></option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <label for="imageFile">Profile Picture:</label>
+                <div class="file-input">
+                    <label for="imageFile" class="file-upload">Choose File</label>
+                    <input type="file" id="imageFile" name="imageFile" />
+                    <span class="file-name" id="imageFile-name">No file chosen</span>
+                </div>
+            </div>
+
+            <div class="action">
+                <a href="/" class="button-cancel">Back to List</a>
+                <button type="submit" class="button">Submit</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        document.getElementById('imageFile').addEventListener('change', function() {
+            const fileNameSpan = document.getElementById('imageFile-name');
+            if (this.files.length > 0) {
+                fileNameSpan.textContent = this.files[0].name;
+            } else {
+                fileNameSpan.textContent = 'No file chosen';
+            }
+        });
+    </script>
+</main>
+
+</html>

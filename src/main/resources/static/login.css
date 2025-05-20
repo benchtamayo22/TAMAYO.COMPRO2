@@ -1,27 +1,28 @@
 :root {
     --font-sans: 'Inter', system-ui, sans-serif;
-    --color-bg: #f3f7f5;                 /* soft background */
-    --color-surface: #ffffff;            /* clean surface */
-    --color-primary: #00704a;            /* Starbucks green */
-    --color-primary-hover: #005c3b;      /* darker green hover */
-    --color-text: #1e3932;               /* deep greenish text */
-    --color-border: #c3d4cc;             /* light border */
-    --color-error: #e53935;              /* attention red */
-    --input-bg: #f5fbf7;                 /* light green-tinted input */
+    --color-bg: #1f2e1f;
+    --color-surface: #2e422e;
+    --color-primary: #6dbb6d;
+    --color-primary-hover: #5aa05a;
+    --color-text: #e6f2e6;
+    --color-border: #4a634a;
+    --color-error: #ff6b6b;
     --border-radius: 0.75rem;
     --transition: all 0.2s ease-in-out;
 }
 
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
     font-family: var(--font-sans);
     background: var(--color-bg);
     color: var(--color-text);
-    margin: 0;
     padding: 2rem;
+    line-height: 1.5;
 }
 
 .login-container {
@@ -30,15 +31,16 @@ body {
     background: var(--color-surface);
     padding: 2rem;
     border-radius: var(--border-radius);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     overflow: hidden;
+    transition: var(--transition);
 }
 
 .login-container h2 {
     text-align: center;
     margin-bottom: 1.5rem;
     font-size: 1.75rem;
-    color: var(--color-primary);
+    color: #d4e9d4;
 }
 
 .login-container label {
@@ -56,21 +58,22 @@ body {
     border-radius: var(--border-radius);
     font-family: inherit;
     font-size: 1rem;
-    background: var(--input-bg);
-    color: var(--color-text);
+    background: #dfeade;
+    color: #1f2e1f;
     margin-bottom: 1rem;
+    transition: var(--transition);
 }
 
 .login-container input:focus {
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 2px rgba(0, 112, 74, 0.2);
+    box-shadow: 0 0 0 2px rgba(109, 187, 109, 0.3);
     outline: none;
 }
 
 input.error {
     border: 2px solid var(--color-error);
-    background-color: #fcecec;
-    color: #b00020;
+    background-color: #ffecec;
+    color: #600;
 }
 
 .login-container .error {
@@ -98,10 +101,12 @@ input.error {
     font-size: 1rem;
     font-weight: 600;
     transition: var(--transition);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
 .login-container button:hover {
     background: var(--color-primary-hover);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .login-container .forgot-password {
@@ -111,10 +116,42 @@ input.error {
 
 .login-container .forgot-password a {
     font-size: 0.9rem;
-    color: var(--color-primary);
+    color: var(--color-text);
     text-decoration: none;
+    transition: color 0.2s ease;
 }
 
 .login-container .forgot-password a:hover {
-    text-decoration: underline;
+    color: var(--color-primary);
+}
+
+.login-container.has-error {
+    background-color: #ffecec;
+    border: 2px solid var(--color-error);
+}
+
+.login-container.has-error h2 {
+    color: #a94442;
+}
+
+.error-text {
+    color: var(--color-error);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 480px) {
+    .login-container {
+        padding: 1.5rem;
+        margin: 2rem auto;
+    }
+
+    .login-container h2 {
+        font-size: 1.5rem;
+    }
+
+    .login-container button {
+        padding: 0.65rem;
+        font-size: 0.95rem;
+    }
 }

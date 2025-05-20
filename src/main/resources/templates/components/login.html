@@ -14,21 +14,25 @@
             <div th:if="${error}">
                 <p class="error-text" th:text="${error}"></p>
             </div>
+
             <div>
                 <label>Username:</label>
                 <input type="text" name="username" th:field="*{username}" autocomplete="off"
                        th:classappend="${#fields.hasErrors('username')} ? 'error' : ''">
                 <p class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
             </div>
+
             <div>
                 <label>Password:</label>
                 <input type="password" name="password" th:field="*{password}" autocomplete="off"
                        th:classappend="${#fields.hasErrors('password')} ? 'error' : ''">
                 <p class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
             </div>
+
             <div>
                 <button type="submit">Login</button>
             </div>
+
             <div class="forgot-password">
                 <a href="#">Forgot Password?</a>
             </div>

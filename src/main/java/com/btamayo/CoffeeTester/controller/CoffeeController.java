@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.util.UUID;
 
 
-
 @Controller
 public class CoffeeController {
 
@@ -96,14 +95,22 @@ public class CoffeeController {
         model.addAttribute("sizes", sizes);
         model.addAttribute("roastLevels", roastLevels);
         model.addAttribute("brewMethods", brewMethods);
-        return "new";
+        model.addAttribute("activeMenu", "add");
+        return "add";
     }
 
+    /**
+     * Handles submission of the add coffee form.
+     *
+     * @param coffee         The Coffee object populated from the form.
+     * @param bindingResult  Validation result.
+     * @param model          Model object for passing data back to the view if there are errors.
+     * @return Redirects to the home page or reloads the add form on validation failure.
+     */
     @PostMapping("/save")
     public String store(@ModelAttribute("coffee") @Valid Coffee coffee,
                         BindingResult bindingResult,
-                        @RequestParam(value = "imageFile", required = false) MultipartFile coffeePicture,
-                        Model model, HttpSession session) {
+                        @RequestParam(value = "imageFile") MultipartFile coffeePicture, Model model, HttpSession session) {
 
         CoffeeUser currentUser = (CoffeeUser) session.getAttribute("coffeeUser");
         if (currentUser == null) {
@@ -115,12 +122,14 @@ public class CoffeeController {
             model.addAttribute("sizes", sizes);
             model.addAttribute("roastLevels", roastLevels);
             model.addAttribute("brewMethods", brewMethods);
-            return "new";
+            return "add";  // Make sure the 'add' template is loaded
         }
 
+        // Assign ID BEFORE handling the image
         coffee.setId(coffeeService.getLastId() + 1);
 
-        if (coffeePicture != null && !coffeePicture.isEmpty()) {
+        // Handle image upload
+        if (!coffeePicture.isEmpty()) {
             String path = "data/coffee_pictures/";
             File uploadFolder = new File(path);
             if (!uploadFolder.exists()) {
@@ -136,8 +145,8 @@ public class CoffeeController {
             }
         }
 
-        coffeeService.addCoffee(coffee);
-        return "redirect:/";
+        coffeeService.addCoffee(coffee);  // Save the coffee with the new picture
+        return "redirect:/";  // Redirect to the list page
     }
 
 

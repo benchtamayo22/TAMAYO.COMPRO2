@@ -3,31 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>View Coffee | [[${coffee.name}]]</title>
-    <!-- Updated static CSS path -->
     <link rel="stylesheet" th:href="@{/coffee-details.css}">
 </head>
 <body>
-
 <main class="main-content">
     <div class="coffee-card">
-
-        <!-- Coffee image section -->
         <div class="profile">
-            <!-- If coffee has an uploaded image -->
             <img th:if="${coffee.coffeePicture != null}"
                  th:src="@{'/' + ${coffee.coffeePicture}}"
                  alt="Coffee Picture">
 
-            <!-- If no image, show fallback -->
             <img th:if="${coffee.coffeePicture == null}"
                  th:src="@{'/images/default-coffee.webp'}"
                  alt="Default Coffee">
 
             <h2 th:text="${coffee.name}"></h2>
-            <p th:text="'₱' + ${coffee.price}"></p>
+            <p th:text="'$' + ${coffee.price}"></p>
         </div>
 
-        <!-- Coffee detail info -->
         <div class="details">
             <div><strong>Type:</strong> <span th:text="${coffee.type}"></span></div>
             <div><strong>Size:</strong> <span th:text="${coffee.size}"></span></div>
@@ -43,10 +36,9 @@
             </div>
         </div>
 
-        <!-- Back button -->
         <a href="/" class="button">Back</a>
     </div>
 </main>
-
 </body>
+
 </html>

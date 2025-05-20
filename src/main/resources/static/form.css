@@ -1,44 +1,32 @@
-* {
-    box-sizing: border-box;
-}
-
 :root {
-    --font-sans: 'Inter', system-ui, sans-serif;
-
-    --color-bg: #f3f7f5;               /* light background */
-    --color-surface: #ffffff;          /* clean white surface */
-    --color-primary: #00704a;          /* Starbucks green */
-    --color-primary-hover: #005c3b;    /* dark green on hover */
-    --color-text: #1e3932;             /* strong greenish-black */
-    --color-error: #e53935;            /* brighter red for visibility */
-    --color-border: #c3d4cc;           /* soft muted border */
-    --input-bg: #f5fbf7;               /* soft green tint */
-    --border-radius: 0.75rem;
+    --accent: #7BB274; /* Matcha green */
+    --accent-hover: #6a9b5f;
+    --primary: #1f2e1f; /* Deep forest green */
+    --form-border: #4e6b4e;
+    --border-radius: 8px;
     --transition: all 0.2s ease-in-out;
-}
 
-body {
-    font-family: var(--font-sans);
-    background: var(--color-bg);
-    color: var(--color-text);
-    margin: 0;
-    padding: 2rem;
+    --error-bg: rgba(239, 68, 68, 0.1);
+    --error-border: #EF4444;
+    --error-text: #FF6B6B;
 }
 
 h1 {
-    font-size: 2rem;
+    margin-top: -50px;
     margin-bottom: 1rem;
-    text-align: center;
-    color: var(--color-primary);
+    text-align: left;
+    font-size: 2.5rem;
+    color: var(--accent);
 }
 
 form {
-    background: var(--color-surface);
-    padding: 2rem;
+    background: var(--primary);
+    padding: 2.5rem 2rem;
     border-radius: var(--border-radius);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-    max-width: 720px;
-    margin: auto;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    margin: 0 auto;
+    max-width: 700px;
+    border: 1px solid rgba(123, 178, 116, 0.2);
 }
 
 form > div {
@@ -49,29 +37,94 @@ label {
     display: inline-block;
     margin-bottom: 0.4rem;
     font-weight: 600;
-    color: var(--color-text);
+    font-size: 0.95rem;
+    letter-spacing: 0.3px;
+    color: #e5e7eb;
 }
 
 input[type="text"],
-input[type="number"],
 input[type="date"],
+input[type="number"],
 select,
 textarea {
     width: 100%;
     padding: 0.65rem 1rem;
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--form-border);
     border-radius: var(--border-radius);
     font-family: inherit;
-    font-size: 1rem;
-    background: var(--input-bg);
-    color: var(--color-text);
-    transition: var(--transition);
+    font-size: 1.05rem;
+    line-height: 1.5;
+    transition: border 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    background: #243a24;
+    color: #f1f5f9;
 }
+
+input[type="file"] {
+    display: none;
+}
+
+label.file-upload {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.5rem;
+    background: linear-gradient(to right, #7BB274, #689f5e);
+    color: white;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: var(--transition);
+    user-select: none;
+    border: none;
+    margin-left: 0.5rem;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+label.file-upload:hover {
+    background: var(--accent-hover);
+    box-shadow: 0 0 8px rgba(123, 178, 116, 0.6);
+}
+
+.flavor-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #e5e7eb;
+}
+
+.checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    gap: 0.5rem 2rem;
+    padding-top: 0.35rem;
+}
+
+.checkbox-grid label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.95rem;
+    color: #e5e7eb;
+    white-space: nowrap;
+}
+
+input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--accent);
+    margin: 0;
+    vertical-align: middle;
+}
+
+
 
 select {
     appearance: none;
-    background-color: var(--input-bg);
-    background-image: url("data:image/svg+xml,%3Csvg fill='none' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5H7z' fill='%231e3932'/%3E%3C/svg%3E");
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #243a24;
     background-repeat: no-repeat;
     background-position: right 0.75rem center;
     background-size: 1rem;
@@ -79,12 +132,14 @@ select {
     cursor: pointer;
 }
 
-input:focus,
+input[type="text"]:focus,
+input[type="date"]:focus,
+input[type="number"]:focus,
 select:focus,
 textarea:focus {
     outline: none;
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 2px rgba(0, 112, 74, 0.3);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(123, 178, 116, 0.3);
 }
 
 textarea {
@@ -93,24 +148,28 @@ textarea {
 
 input[type="radio"] {
     margin-right: 0.5rem;
+    accent-color: var(--accent);
 }
 
 .error {
-    color: var(--color-error);
+    color: var(--error-text);
     font-size: 0.875rem;
     margin-top: 0.25rem;
 }
 
 input.error,
 select.error,
-textarea.error {
-    border-color: var(--color-error);
-    background-color: #fbe9e7;
+textarea.error,
+input[type="number"].error {
+    border: 1px solid var(--error-border);
+    background: var(--error-bg);
+    color: var(--error-text);
+    box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
 }
 
 button,
-a.button {
-    background: var(--color-primary);
+a {
+    background: var(--accent);
     color: white;
     border: none;
     padding: 0.75rem 1.5rem;
@@ -119,35 +178,70 @@ a.button {
     font-size: 1rem;
     font-weight: 600;
     transition: var(--transition);
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 button:hover,
-.button:hover {
-    background: var(--color-primary-hover);
+a:hover {
+    background: var(--accent-hover);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-1px);
 }
 
 a {
-    color: var(--color-primary);
     text-decoration: none;
-    font-weight: 500;
-}
-
-a:hover {
-    text-decoration: underline;
 }
 
 div.action {
     display: flex;
     justify-content: space-between;
+    gap: 1rem;
+}
+
+@media (max-width: 768px) {
+    div.action {
+        flex-direction: column;
+    }
+
+    button,
+    .button {
+        width: 100%;
+    }
+}
+
+.form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+@media (min-width: 768px) {
+    .form-row {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .form-row label {
+        width: 150px;
+        margin-bottom: 0;
+    }
+
+    .form-row input,
+    .form-row select,
+    .form-row textarea {
+        flex: 1;
+    }
+}
+
+.file-row .file-input-wrapper {
+    display: flex;
     align-items: center;
-    margin-top: 2rem;
+    gap: 1rem;
+    flex-wrap: wrap;
 }
 
-.button.cancel {
-    background: #be123c;
-    color: white;
-}
-
-.button.cancel:hover {
-    background: #9f1239;
+.file-row .file-name {
+    font-size: 0.95rem;
+    color: #ccc;
 }

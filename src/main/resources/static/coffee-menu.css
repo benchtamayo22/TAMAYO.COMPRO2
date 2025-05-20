@@ -1,89 +1,97 @@
 /* Main layout */
 main {
     padding: 2rem 1rem;
-    background-color: #f3f1e7;  /* Light Starbucks-inspired background */
-    min-height: 100vh;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-/* Header style */
 h1 {
-    color: #b4c974;             /* warm green */
-    margin-bottom: 2rem;
+    color: #b4c974;
+    margin-bottom: 2.5rem;
     text-align: left;
-    font-size: 4.2rem;          /* Starbucks-inspired emphasis */
-    font-weight: 600;
-    letter-spacing: -1px;
+    font-size: 4rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
 }
 
-/* Grid of cards */
+/* Card grid layout */
 .card-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2rem;
     padding-bottom: 2rem;
     justify-items: center;
+    width: 100%;
 }
 
-/* Coffee card styling */
+/* Individual coffee card */
 .card-coffee {
-    background: #2a2e26;        /* dark earthy tone */
-    border-radius: 14px;
+    background: #2a2e26;
+    border-radius: 1rem;
     padding: 1.5rem;
     color: #e3e3d8;
     text-align: center;
     width: 100%;
-    max-width: 300px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 320px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+    border: 1px solid #383d33;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-/* Hover effect */
 .card-coffee:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    transform: translateY(-6px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+    border-color: #4e5548;
 }
 
-/* Coffee image styling */
+/* Coffee image */
 .coffee-image {
     width: 100%;
-    height: 160px;
+    height: 180px;
     object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 1.2rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 0.75rem;
+    margin-bottom: 1.25rem;
+    border: 2px solid #3b4136;
 }
 
-/* Coffee name */
+/* Coffee name and price */
 .card-coffee h3 {
-    margin-top: 1rem;
-    font-size: 1.2rem;
-    color: #d5e892;             /* warm green accent */
-    font-weight: 500;
+    margin: 0.5rem 0 0.75rem;
+    font-size: 1.35rem;
+    color: #d5e892;
+    font-weight: 600;
+    letter-spacing: 0.4px;
 }
 
-/* Description / price / type */
 .card-coffee p {
     font-size: 1rem;
     color: #cccfc3;
-    margin: 0.4rem 0;
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
 }
 
-/* Strong label (like bolded price) */
 .card-coffee strong {
+    display: inline-block;
+    margin-top: 0.25rem;
     color: #e3e3d8;
-    font-weight: bold;
+    font-weight: 700;
+    font-size: 1.05rem;
+    background: #3b4336;
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.5rem;
 }
 
-/* Smooth scrollbar (hidden on WebKit) */
 .card-grid::-webkit-scrollbar {
     display: none;
 }
 
-/* Responsive tweaks */
 @media (max-width: 768px) {
     .card-grid {
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1rem;
+        gap: 1.25rem;
     }
 
     .card-coffee {
@@ -91,7 +99,7 @@ h1 {
         max-width: 100%;
     }
 
-    h1 {
-        font-size: 3rem;
+    .coffee-image {
+        height: 140px;
     }
 }

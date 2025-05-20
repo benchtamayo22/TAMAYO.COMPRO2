@@ -4,17 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title th:replace="${title}">Responsive Dash</title>
-
-    <!-- Correct Thymeleaf path for static CSS -->
-    <link rel="stylesheet" th:href="@{/css/main.css}" />
+    <link rel="stylesheet" th:href="@{/main.css}" />
     <link th:replace="${link}"/>
 </head>
 <body>
 <aside>
     <div class="sidebar">
         <div class="brand">
-            <!-- Replace this image with a Starbucks logo or coffee cup icon -->
-            <img src="/pictures/my-coffee.jpg" alt="cup-of-bench" />
+            <img src="/images/my-coffee.jpg" alt="my-cafe" />
             <span>Starbucks</span>
         </div>
         <div class="menu">
@@ -27,35 +24,31 @@
         </div>
     </div>
     <div class="user-profile">
-        <img src="/pictures/user-profile.jpg" alt="user-profile" />
+        <img src="/images/my-profile.jpg" alt="user-profile" />
         <div>
-            <h1>Lexusssssss</h1>
-            <span>Coffee Manager</span>
+            <h1>Lex</h1>
+            <span>IT Student</span>
         </div>
     </div>
 </aside>
-
 <main th:replace="${content}">dynamic content will appear here</main>
-
 <script>
     window.addEventListener('load', function () {
-        // Navigation click handler
+
         document.querySelectorAll('.menu li').forEach(menu => {
             menu.addEventListener('click', () => {
                 const url = menu.getAttribute('data-url');
-                if (url) location.href = url;
+                location.href = url; //this will redirect to the url
             });
         });
 
-        // Active class toggle
+    });
         document.querySelectorAll('.sidebar .menu li').forEach(item => {
-            item.addEventListener('click', () => {
-                document.querySelectorAll('.sidebar .menu li').forEach(li => li.classList.remove('active'));
-                item.classList.add('active');
-            });
+        item.addEventListener('click', () => {
+            document.querySelectorAll('.sidebar .menu li').forEach(li => li.classList.remove('active'));
+            item.classList.add('active');
         });
     });
 </script>
-
 </body>
 </html>

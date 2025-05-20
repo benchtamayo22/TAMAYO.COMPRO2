@@ -2,14 +2,12 @@
 
 :root {
     --font-family: "Poppins", sans-serif;
-    --bg-color: #f3f1e7;               /* Light creamy background */
-    --text-color: #2a2e26;             /* Deep earthy text */
-    --starbucks-green: #00704a;        /* Classic Starbucks green */
-    --accent-color: #b4c974;           /* Light green accent */
-    --sidebar-bg: #1f2e1f;             /* Dark green sidebar */
-    --sidebar-text: #d5e8d4;           /* Muted green text */
-    --sidebar-hover: #324d32;          /* Hover color */
-    --shadow-color: rgba(0, 0, 0, 0.15);
+    --bg-color: #2e3b2f;
+    --text-color: #e6f2e6;
+    --accent-color: #b4d6b4;
+    --sidebar-bg: #1f2e1f;
+    --sidebar-text: #a8d0a8;
+    --sidebar-hover: #324d32;
 }
 
 *,
@@ -24,7 +22,7 @@ body {
     font-family: var(--font-family);
     background-color: var(--bg-color);
     display: grid;
-    grid-template-columns: 320px 1fr;
+    grid-template-columns: 306px 1fr; /* wide sidebar and flexible main */
     grid-template-rows: 100vh;
     grid-template-areas: "sidebar main";
     color: var(--text-color);
@@ -37,7 +35,7 @@ body {
 aside {
     grid-area: sidebar;
     background-color: var(--sidebar-bg);
-    padding: 48px 32px 96px;
+    padding: 36px 28px 78px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -45,11 +43,6 @@ aside {
     position: sticky;
     top: 0;
     overflow: hidden;
-    background-image: url('/pictures/coffee-bean-pattern.png'); /* Optional subtle texture */
-    background-repeat: no-repeat;
-    background-position: bottom right;
-    background-size: 100px;
-    opacity: 0.98;
 }
 
 .sidebar {
@@ -63,20 +56,18 @@ aside {
     margin-bottom: 64px;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
 }
 
 .brand img {
     width: 42px;
     height: 42px;
     border-radius: 50%;
-    object-fit: cover;
 }
 
 .brand span {
-    font-weight: 700;
-    font-size: 28px;
-    color: var(--starbucks-green);
+    font-weight: 600;
+    font-size: 26px;
 }
 
 .sidebar .menu {
@@ -85,53 +76,63 @@ aside {
 
 .sidebar .menu ul {
     list-style: none;
+    padding: 0;
+    margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
 }
 
 .sidebar .menu li {
-    color: var(--sidebar-text);
-    padding: 14px 22px;
-    border-radius: 12px;
+    color: var(--text-color);
+    padding: 11px 16px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease;
     display: flex;
     align-items: center;
     cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
     user-select: none;
-}
-
-.sidebar .menu li:hover,
-.sidebar .menu li.active {
-    background-color: var(--sidebar-hover);
-    color: #fff;
-    box-shadow: 0 0 10px var(--starbucks-green);
 }
 
 .sidebar .menu li svg {
     margin-right: 14px;
     width: 24px;
     height: 24px;
-    fill: var(--sidebar-text);
+    fill: var(--text-color);
     transition: fill 0.3s ease;
 }
 
-.sidebar .menu li:hover svg,
+.sidebar .menu li:hover {
+    background-color: var(--sidebar-hover);
+    color: var(--text-color);
+}
+
+.sidebar .menu li:hover svg {
+    fill: var(--sidebar-text);
+}
+
+.sidebar .menu li.active {
+    background-color: var(--sidebar-hover);
+    color: var(--sidebar-text);
+}
+
 .sidebar .menu li.active svg {
-    fill: #fff;
+    fill: var(--sidebar-text);
 }
 
 .sidebar .menu li span:last-child {
     margin-left: auto;
-    color: var(--sidebar-text);
+    color: var(--text-color);   /* Hide by default */
+    user-select: none;
     transition: color 0.3s ease;
 }
 
 .sidebar .menu li.active span:last-child {
-    color: #fff;
+    color: var(--text-color);  /* Show when active */
 }
 
-/* User Profile */
+
+/* User Profile at Bottom */
 .user-profile {
     margin-top: auto;
     padding: 16px 0 0;
@@ -139,6 +140,7 @@ aside {
     align-items: center;
     gap: 12px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: var(--sidebar-bg);
 }
 
 .user-profile img {
@@ -146,60 +148,59 @@ aside {
     height: 42px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid var(--starbucks-green);
-    box-shadow: 0 0 8px var(--starbucks-green);
 }
 
 .user-profile h1 {
+    margin: 0;
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 500;
     color: var(--sidebar-text);
     line-height: 1.2;
 }
 
 .user-profile span {
     font-size: 12px;
-    color: #aaa;
+    color: #ccc;
 }
 
-/* Main content */
+/* Main Content */
 main {
     grid-area: main;
-    padding: 71px 64px;
+    padding: 71px;
     background-color: var(--bg-color);
     display: flex;
     flex-direction: column;
     height: 100vh;
     overflow-y: auto;
-    min-width: 0;
-    scroll-behavior: smooth;
+    min-width: 0; /* IMPORTANT: prevent main from overflowing grid */
 }
 
+/* added to prevent wide children breaking layout */
 .main-content {
     padding: 0 5vw;
     width: 100%;
     margin: 0 auto;
     max-width: 100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
     word-break: break-word;
 }
 
 /* Headings */
 h1 {
     color: var(--text-color);
-    font-weight: 700;
+    font-weight: bold;
     font-size: 3rem;
     margin: 1vw 0;
 }
 
 /* Responsive: Collapse Sidebar */
-@media (max-width: 768px) {
+@media (max-width: 48em) {
     body {
-        grid-template-columns: 102px 1fr;
+        grid-template-columns: 102px 1fr; /* Adjust sidebar width */
     }
 
-    .brand span,
-    .menu > ul > li > span,
-    .user-profile > div {
+    .brand span, .menu > ul > li > span, .user-profile > div{
         display: none;
     }
 
@@ -207,6 +208,9 @@ h1 {
         margin-right: 0;
         width: 24px;
         height: 24px;
+        padding: 0;
         flex-grow: 1;
+        overflow: visible;
     }
+
 }
