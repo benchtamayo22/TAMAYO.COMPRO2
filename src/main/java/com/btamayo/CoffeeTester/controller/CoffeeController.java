@@ -16,6 +16,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
+
+
 @Controller
 public class CoffeeController {
 
@@ -27,63 +29,81 @@ public class CoffeeController {
     private final String[] roastLevels = {"Light", "Medium", "Dark"};
     private final String[] brewMethods = {"Drip", "French Press", "Espresso", "Filter"};
 
-    // ROOT: Redirect to login if not logged in, else home page
-    @GetMapping("/")
-    public String index(HttpSession session) {
-        CoffeeUser currentUser = (CoffeeUser) session.getAttribute("coffeeUser");
-        if (currentUser == null) {
-            return "redirect:/login";
-        }
-        return "redirect:/catalog";
-    }
-
-    @GetMapping("/home")
-    public String home(Model model, HttpSession session) {
-        CoffeeUser currentUser = (CoffeeUser) session.getAttribute("coffeeUser");
-        if (currentUser == null) {
-            return "redirect:/login";
-        }
-        model.addAttribute("coffeeUser", currentUser);
-        return "main";  // ✅ return the correct view name
-    }
-
-
-    // Catalog page - login required
     @GetMapping("/catalog")
-    public String catalog(Model model, HttpSession session) {
-        CoffeeUser currentUser = (CoffeeUser) session.getAttribute("coffeeUser");
-        if (currentUser == null) {
-            return "redirect:/login";
-        }
+    public String menu(Model model) {
         model.addAttribute("coffees", coffeeService.getCoffees());
         model.addAttribute("activeMenu", "catalog");
         return "catalog";
     }
 
-    // Add coffee form - login required
-    @GetMapping("/new")
-    public String add(Model model, HttpSession session) {
+
+    @GetMapping("/home")
+    public String home(Model model) {
+        return "layout/main";
+    }
+
+    /**
+     * Displays the home page with a list of coffees.
+     *
+     * @param search Search query to filter coffee entries.
+     * @param model  Model object for passing data to the view.
+     * @return Name of the Thymeleaf template to render.
+     */
+    @GetMapping("/")
+    public String index(@RequestParam(defaultValue = "") String search, Model model, HttpSession session) {
         CoffeeUser currentUser = (CoffeeUser) session.getAttribute("coffeeUser");
-        if (currentUser == null) {
+        if(currentUser == null){
             return "redirect:/login";
         }
 
+        model.addAttribute("coffees", coffeeService.searchCoffee(search));
+        model.addAttribute("activeMenu", "home");
+        return "index";
+    }
+
+
+    /**
+     * Deletes a coffee entry by ID.
+     *
+     * @param id The ID of the coffee to delete.
+     * @return Redirects to the home page after deletion.
+     */
+    @GetMapping("/delete")
+    public String delete(@RequestParam int id, HttpSession session) {
+        CoffeeUser currentUser = (CoffeeUser) session.getAttribute("coffeeUser");
+        if(currentUser == null){
+            return "redirect:/login";
+        }
+
+        coffeeService.deleteCoffee(id);
+        return "redirect:/";
+    }
+
+    /**
+     * Displays the add coffee form.
+     *
+     * @param model Model object for passing data to the view.
+     * @return Name of the Thymeleaf template to render.
+     */
+    @GetMapping("/add")
+    public String add(Model model, HttpSession session) {
+        CoffeeUser currentUser = (CoffeeUser) session.getAttribute("coffeeUser");
+        if(currentUser == null){
+            return "redirect:/login";
+        }
         model.addAttribute("coffee", new Coffee());
         model.addAttribute("types", types);
         model.addAttribute("sizes", sizes);
         model.addAttribute("roastLevels", roastLevels);
         model.addAttribute("brewMethods", brewMethods);
-        model.addAttribute("activeMenu", "new");
         return "new";
     }
 
-    // Save new coffee - login required
     @PostMapping("/save")
     public String store(@ModelAttribute("coffee") @Valid Coffee coffee,
                         BindingResult bindingResult,
-                        @RequestParam("imageFile") MultipartFile coffeePicture,
-                        Model model,
-                        HttpSession session) {
+                        @RequestParam(value = "imageFile", required = false) MultipartFile coffeePicture,
+                        Model model, HttpSession session) {
 
         CoffeeUser currentUser = (CoffeeUser) session.getAttribute("coffeeUser");
         if (currentUser == null) {
@@ -98,7 +118,9 @@ public class CoffeeController {
             return "new";
         }
 
-        if (!coffeePicture.isEmpty()) {
+        coffee.setId(coffeeService.getLastId() + 1);
+
+        if (coffeePicture != null && !coffeePicture.isEmpty()) {
             String path = "data/coffee_pictures/";
             File uploadFolder = new File(path);
             if (!uploadFolder.exists()) {
@@ -107,47 +129,58 @@ public class CoffeeController {
 
             String fileName = UUID.randomUUID() + coffeePicture.getOriginalFilename().substring(coffeePicture.getOriginalFilename().lastIndexOf("."));
             try {
-                coffeePicture.transferTo(new File(uploadFolder, fileName));
+                coffeePicture.transferTo(new File(uploadFolder.getAbsolutePath() + File.separator + fileName));
                 coffee.setCoffeePicture(fileName);
             } catch (IOException e) {
                 System.out.println("File upload error: " + e.getMessage());
             }
         }
 
-        coffeeService.addCoffee(coffee);  // ID set inside addCoffee()
+        coffeeService.addCoffee(coffee);
         return "redirect:/";
     }
 
-    // Example: Edit page (login required)
-    @GetMapping("/edit/{id}")
-    public String edit(@PathVariable int id, Model model, HttpSession session) {
+
+
+    /**
+     * Displays the edit form for a specific coffee entry.
+     *
+     * @param id    The ID of the coffee to edit.
+     * @param model Model object for passing data to the view.
+     * @return Name of the Thymeleaf template to render, or redirect to home if coffee not found.
+     */
+    @GetMapping("/edit")
+    public String edit(@RequestParam int id, Model model, HttpSession session) {
         CoffeeUser currentUser = (CoffeeUser) session.getAttribute("coffeeUser");
-        if (currentUser == null) {
+        if(currentUser == null){
             return "redirect:/login";
         }
-
         Coffee coffee = coffeeService.getCoffee(id);
-        if (coffee == null) {
-            return "redirect:/catalog";
+        if (coffee != null) {
+            model.addAttribute("coffee", coffee);
+            model.addAttribute("types", types);
+            model.addAttribute("sizes", sizes);
+            model.addAttribute("roastLevels", roastLevels);
+            model.addAttribute("brewMethods", brewMethods);
+            return "edit";
         }
-
-        model.addAttribute("coffee", coffee);
-        model.addAttribute("types", types);
-        model.addAttribute("sizes", sizes);
-        model.addAttribute("roastLevels", roastLevels);
-        model.addAttribute("brewMethods", brewMethods);
-        model.addAttribute("activeMenu", "edit");
-        return "edit";
+        return "redirect:/";
     }
 
-    // Update coffee - login required
-    @PostMapping("/update/{id}")
-    public String update(@PathVariable int id,
-                         @ModelAttribute("coffee") @Valid Coffee coffee,
+    /**
+     * Handles submission of the edit coffee form.
+     *
+     * @param coffee         The updated Coffee object.
+     * @param bindingResult  Validation result.
+     * @param model          Model object for passing data back to the view if there are errors.
+     * @return Redirects to the home page or reloads the edit form on validation failure.
+     */
+    @PostMapping("/update")
+    public String update(@ModelAttribute("coffee") @Valid Coffee coffee,
                          BindingResult bindingResult,
-                         @RequestParam("imageFile") MultipartFile coffeePicture,
-                         Model model,
-                         HttpSession session) {
+                         @RequestParam(value = "flavorNotes", required = false) String[] flavorNotes,
+                         HttpSession session,
+                         Model model) {
 
         CoffeeUser currentUser = (CoffeeUser) session.getAttribute("coffeeUser");
         if (currentUser == null) {
@@ -162,36 +195,31 @@ public class CoffeeController {
             return "edit";
         }
 
-        if (!coffeePicture.isEmpty()) {
-            String path = "data/coffee_pictures/";
-            File uploadFolder = new File(path);
-            if (!uploadFolder.exists()) {
-                uploadFolder.mkdirs();
+        Coffee existing = coffeeService.getCoffee(coffee.getId());
+        if (existing != null) {
+            // Preserve image if not updated
+            if (coffee.getCoffeePicture() == null || coffee.getCoffeePicture().isEmpty()) {
+                coffee.setCoffeePicture(existing.getCoffeePicture());
             }
 
-            String fileName = UUID.randomUUID() + coffeePicture.getOriginalFilename().substring(coffeePicture.getOriginalFilename().lastIndexOf("."));
-            try {
-                coffeePicture.transferTo(new File(uploadFolder, fileName));
-                coffee.setCoffeePicture(fileName);
-            } catch (IOException e) {
-                System.out.println("File upload error: " + e.getMessage());
+            // Handle flavor notes
+            if (flavorNotes != null) {
+                coffee.setFlavorNotes(String.join(",", flavorNotes));
+            } else {
+                coffee.setFlavorNotes("");
             }
+
+            coffeeService.updateCoffee(coffee.getId(), coffee);
         }
 
-        coffee.setId(id);
-        coffeeService.updateCoffee(id, coffee);
-        return "redirect:/catalog";
+        return "redirect:/";
     }
 
-    // Delete coffee - login required
-    @GetMapping("/delete/{id}")
-    public String delete(@PathVariable int id, HttpSession session) {
-        CoffeeUser currentUser = (CoffeeUser) session.getAttribute("coffeeUser");
-        if (currentUser == null) {
-            return "redirect:/login";
-        }
-
-        coffeeService.deleteCoffee(id);
-        return "redirect:/catalog";
+    @GetMapping("/coffee/{id}")
+    public String view(@PathVariable int id, Model model) {
+        Coffee coffee = coffeeService.getCoffee(id);
+        model.addAttribute("coffee", coffee);
+        return "coffee"; // This should point to a Thymeleaf template named coffee.html
     }
+
 }

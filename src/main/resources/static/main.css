@@ -4,7 +4,8 @@
     --font-family: "Poppins", sans-serif;
     --bg-color: #f3f1e7;               /* Light creamy background */
     --text-color: #2a2e26;             /* Deep earthy text */
-    --accent-color: #b4c974;           /* Starbucks green accent */
+    --starbucks-green: #00704a;        /* Classic Starbucks green */
+    --accent-color: #b4c974;           /* Light green accent */
     --sidebar-bg: #1f2e1f;             /* Dark green sidebar */
     --sidebar-text: #d5e8d4;           /* Muted green text */
     --sidebar-hover: #324d32;          /* Hover color */
@@ -23,7 +24,7 @@ body {
     font-family: var(--font-family);
     background-color: var(--bg-color);
     display: grid;
-    grid-template-columns: 306px 1fr;
+    grid-template-columns: 320px 1fr;
     grid-template-rows: 100vh;
     grid-template-areas: "sidebar main";
     color: var(--text-color);
@@ -36,7 +37,7 @@ body {
 aside {
     grid-area: sidebar;
     background-color: var(--sidebar-bg);
-    padding: 36px 28px 78px;
+    padding: 48px 32px 96px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -44,6 +45,11 @@ aside {
     position: sticky;
     top: 0;
     overflow: hidden;
+    background-image: url('/pictures/coffee-bean-pattern.png'); /* Optional subtle texture */
+    background-repeat: no-repeat;
+    background-position: bottom right;
+    background-size: 100px;
+    opacity: 0.98;
 }
 
 .sidebar {
@@ -64,12 +70,13 @@ aside {
     width: 42px;
     height: 42px;
     border-radius: 50%;
+    object-fit: cover;
 }
 
 .brand span {
     font-weight: 700;
-    font-size: 24px;
-    color: var(--accent-color);
+    font-size: 28px;
+    color: var(--starbucks-green);
 }
 
 .sidebar .menu {
@@ -80,23 +87,25 @@ aside {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
 }
 
 .sidebar .menu li {
     color: var(--sidebar-text);
-    padding: 12px 18px;
-    border-radius: 10px;
+    padding: 14px 22px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+    user-select: none;
 }
 
 .sidebar .menu li:hover,
 .sidebar .menu li.active {
     background-color: var(--sidebar-hover);
     color: #fff;
+    box-shadow: 0 0 10px var(--starbucks-green);
 }
 
 .sidebar .menu li svg {
@@ -137,11 +146,13 @@ aside {
     height: 42px;
     border-radius: 50%;
     object-fit: cover;
+    border: 2px solid var(--starbucks-green);
+    box-shadow: 0 0 8px var(--starbucks-green);
 }
 
 .user-profile h1 {
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 600;
     color: var(--sidebar-text);
     line-height: 1.2;
 }
@@ -154,13 +165,14 @@ aside {
 /* Main content */
 main {
     grid-area: main;
-    padding: 71px;
+    padding: 71px 64px;
     background-color: var(--bg-color);
     display: flex;
     flex-direction: column;
     height: 100vh;
     overflow-y: auto;
     min-width: 0;
+    scroll-behavior: smooth;
 }
 
 .main-content {

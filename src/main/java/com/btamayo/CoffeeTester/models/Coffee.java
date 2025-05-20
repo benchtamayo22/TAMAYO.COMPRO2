@@ -1,8 +1,6 @@
 package com.btamayo.CoffeeTester.models;
 
 import jakarta.validation.constraints.*;
-
-import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -41,13 +39,16 @@ public class Coffee {
 
     private String coffeePicture;
 
-    // Flavor notes stored as CSV string in service, but model as List<String> for UI convenience
-    private String flavorNotes = "";
+    // For storage (CSV string)
+    private String flavorNotes;
+
+    // For UI binding
+    private List<String> flavorNotesList = new ArrayList<>();
 
     public Coffee() {
     }
 
-    // Getters and setters for all fields
+    // --- Getters and Setters ---
 
     public int getId() {
         return id;
@@ -143,10 +144,12 @@ public class Coffee {
 
     public void setFlavorNotes(String flavorNotes) {
         this.flavorNotes = flavorNotes;
+        if (flavorNotes != null && !flavorNotes.isEmpty()) {
+            this.flavorNotesList = Arrays.asList(flavorNotes.split(","));
+        } else {
+            this.flavorNotesList = new ArrayList<>();
+        }
     }
-
-    // If using JPA; otherwise just note this won't persist
-    private List<String> flavorNotesList = new ArrayList<>();
 
     public List<String> getFlavorNotesList() {
         return flavorNotesList;
@@ -154,7 +157,6 @@ public class Coffee {
 
     public void setFlavorNotesList(List<String> flavorNotesList) {
         this.flavorNotesList = flavorNotesList;
-        this.flavorNotes = String.join(",", flavorNotesList);  // sync string version
+        this.flavorNotes = String.join(",", flavorNotesList);
     }
-
 }
