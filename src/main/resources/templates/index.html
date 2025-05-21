@@ -50,7 +50,7 @@
                 <td th:text="${coffee.origin}"></td>
                 <td th:text="${coffee.isDecaf ? 'Yes' : 'No'}"></td>
                 <td th:text="${coffee.stock}"></td>
-                <td th:text="${coffee.flavorNotes}"></td>
+                <td th:text="${coffee.flavorNotes != null ? #strings.arrayJoin(coffee.flavorNotes, ', ') : 'No flavor notes}"></td>
                 <td th:text="${coffee.brewMethod}"></td>
                 <td class="action-links">
                     <a th:href="@{/coffee/{id}(id=${coffee.id})}" class="view-btn">View</a>

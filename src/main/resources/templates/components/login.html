@@ -5,40 +5,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" th:href="@{/login.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="login-container" th:classappend="${error} ? 'has-error' : ''">
+<div class="login-wrapper">
     <div class="login-card">
-        <form method="post" action="/login" th:object="${coffeeUser}">
-            <h2>Login</h2>
-            <div th:if="${error}">
-                <p class="error-text" th:text="${error}"></p>
-            </div>
+        <div class="form-section">
+            <h2>Welcome</h2>
+            <p class="subtitle">A brand new day is here. It's your day to shape. Sign in and get started on your projects.</p>
 
-            <div>
-                <label>Username:</label>
-                <input type="text" name="username" th:field="*{username}" autocomplete="off"
-                       th:classappend="${#fields.hasErrors('username')} ? 'error' : ''">
+            <form method="post" action="/login" th:object="${coffeeUser}">
+                <label>Email</label>
+                <input type="text" th:field="*{username}" placeholder="abc123@gmail.com" autocomplete="off">
                 <p class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
-            </div>
 
-            <div>
-                <label>Password:</label>
-                <input type="password" name="password" th:field="*{password}" autocomplete="off"
-                       th:classappend="${#fields.hasErrors('password')} ? 'error' : ''">
+                <label>Password</label>
+                <input type="password" th:field="*{password}" placeholder="Enter your Password" autocomplete="off">
                 <p class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
-            </div>
 
-            <div>
-                <button type="submit">Login</button>
-            </div>
+                <div class="forgot-password">
+                    <a href="#">Forget password</a>
+                </div>
 
-            <div class="forgot-password">
-                <a href="#">Forgot Password?</a>
-            </div>
-        </form>
+                <button type="submit">Sign in</button>
+
+                <div class="divider">
+                    <span>or</span>
+                </div>
+
+                <div class="social-buttons">
+                    <button type="button" class="social-btn">
+                        <img src="https://www.google.com/favicon.ico" alt="Google" class="social-icon">
+                        <span>Sign in with Google</span>
+                    </button>
+                    <button type="button" class="social-btn">
+                        <img src="https://www.facebook.com/favicon.ico" alt="Facebook" class="social-icon">
+                        <span>Sign in with Facebook</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="image-section">
+            <img src="/images/login-image.jpeg" alt="Login visual">
+        </div>
     </div>
 </div>
-
 </body>
 </html>

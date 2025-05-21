@@ -12,7 +12,6 @@
     <main>
         <h1>Our Coffee Catalog</h1>
         <div class="card-grid">
-            <!-- Loop and call the fragment for each coffee -->
             <div th:each="coffee : ${coffees}">
                 <div th:replace="components/coffee-card :: coffeeCardFragment(coffee=${coffee})"></div>
             </div>

@@ -50,12 +50,9 @@
                 <input type="text" id="origin" th:field="*{origin}">
             </div>
 
-            <div class="form-row">
+            <div class="form-row checkbox-row">
                 <label for="isDecaf">Decaf:</label>
-                <select id="isDecaf" th:field="*{decaf}">
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
-                </select>
+                <input type="checkbox" id="isDecaf" th:field="*{decaf}">
             </div>
 
             <div class="form-row">

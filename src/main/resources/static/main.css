@@ -2,13 +2,14 @@
 
 :root {
     --font-family: "Poppins", sans-serif;
-    --bg-color: #2e3b2f;
-    --text-color: #e6f2e6;
+    --bg-color: #2e3b2f;              /* main background */
+    --text-color: #e6f2e6;            /* main text */
     --accent-color: #b4d6b4;
-    --sidebar-bg: #1f2e1f;
-    --sidebar-text: #a8d0a8;
-    --sidebar-hover: #324d32;
+    --sidebar-bg: #1c291c;            /* darker green for sidebar */
+    --sidebar-text: #d2f5d2;          /* lighter green for text in sidebar */
+    --sidebar-hover: #2f4f2f;         /* darker hover */
 }
+
 
 *,
 *::before,
@@ -103,8 +104,8 @@ aside {
 }
 
 .sidebar .menu li:hover {
-    background-color: var(--sidebar-hover);
-    color: var(--text-color);
+    background-color: #2f4f2f;
+    color: var(--sidebar-text);
 }
 
 .sidebar .menu li:hover svg {
@@ -113,11 +114,11 @@ aside {
 
 .sidebar .menu li.active {
     background-color: var(--sidebar-hover);
-    color: var(--sidebar-text);
+    color: var(--sidebar-text); /* already green */
 }
 
 .sidebar .menu li.active svg {
-    fill: var(--sidebar-text);
+    fill: var(--sidebar-text); /* already green */
 }
 
 .sidebar .menu li span:last-child {
@@ -131,15 +132,13 @@ aside {
     color: var(--text-color);  /* Show when active */
 }
 
-
-/* User Profile at Bottom */
 .user-profile {
     margin-top: auto;
     padding: 16px 0 0;
     display: flex;
     align-items: center;
     gap: 12px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--sidebar-hover); /* replace white with green tone */
     background-color: var(--sidebar-bg);
 }
 
@@ -160,7 +159,7 @@ aside {
 
 .user-profile span {
     font-size: 12px;
-    color: #ccc;
+    color: var(--sidebar-text); /* instead of #ccc */
 }
 
 /* Main Content */

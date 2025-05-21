@@ -3,9 +3,9 @@
 :root {
   --font-family: "Poppins", sans-serif;
 
-  --primary: #1e3932;
+  --primary: #00704A;
   --secondary: #f1f8f4;
-  --accent: #00754a;
+  --accent: #D8E8E2;
   --background: #f6f8f6;
   --container-bg: #e8f5e9;
   --card-bg: #d7ecd9;
@@ -144,7 +144,7 @@ tr:nth-child(even) {
   background-color: #f3fdf6;
 }
 
-/* Action Buttons */
+/* Action Buttons - Starbucks Theme */
 .action-links a {
   display: inline-block;
   padding: 0.5rem 1.2rem;
@@ -159,24 +159,24 @@ tr:nth-child(even) {
 }
 
 .view-btn {
-  background-color: var(--btn-view);
+  background-color: #00704A; /* Classic Starbucks green */
 }
 .view-btn:hover {
-  background-color: var(--btn-view-hover);
+  background-color: #005238; /* Darker green on hover */
 }
 
 .edit-btn {
-  background-color: var(--btn-edit);
+  background-color: #B3763C; /* Coffee brown tone */
 }
 .edit-btn:hover {
-  background-color: var(--btn-edit-hover);
+  background-color: #8B5A2B; /* Darker brown */
 }
 
 .delete-btn {
-  background-color: var(--btn-delete);
+  background-color: #D62D20; /* Keep red for clarity */
 }
 .delete-btn:hover {
-  background-color: var(--btn-delete-hover);
+  background-color: #A01715;
 }
 
 /* Responsive */
