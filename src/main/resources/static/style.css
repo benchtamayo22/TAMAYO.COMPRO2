@@ -160,11 +160,15 @@ tr:nth-child(even) {
 }
 
 .view-btn {
+<<<<<<< HEAD
   background-color: #3cb371;
   color: white;
   padding: 5px 10px;
   border-radius: 5px;
   text-decoration: none;
+=======
+  background-color: #00704A; /* Classic Starbucks green */
+>>>>>>> 2b201f0ce0eb0f90a72031f449d24ff717af3429
 }
 
 .view-btn:hover {
