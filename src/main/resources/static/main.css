@@ -10,6 +10,10 @@
     --sidebar-hover: #2f4f2f;         /* darker hover */
 }
 
+html, body {
+    height: 100%;
+    margin: 0;
+}
 
 *,
 *::before,
@@ -36,7 +40,7 @@ body {
 aside {
     grid-area: sidebar;
     background-color: var(--sidebar-bg);
-    padding: 36px 28px 78px;
+    padding: 36px 28px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -51,6 +55,7 @@ aside {
     display: flex;
     flex-direction: column;
     height: 100%;
+    justify-content: space-between;
 }
 
 .sidebar .brand {

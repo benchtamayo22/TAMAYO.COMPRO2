@@ -22,15 +22,18 @@
                 <li th:replace="~{components/menu_item :: menuItem('/logout', 'Log Out', 'logout', ${activeMenu})}"></li>
             </ul>
         </div>
-    </div>
-    <div class="user-profile">
-        <img src="/images/my-profile.jpg" alt="user-profile" />
-        <div>
-            <h1>Lex</h1>
-            <span>Starbucks Owner</span>
+
+        <!-- Move this inside .sidebar -->
+        <div class="user-profile">
+            <img src="/images/my-profile.jpg" alt="user-profile" />
+            <div>
+                <h1>Lex</h1>
+                <span>Starbucks Owner</span>
+            </div>
         </div>
     </div>
 </aside>
+
 <main th:replace="${content}">dynamic content will appear here</main>
 <script>
     window.addEventListener('load', function () {

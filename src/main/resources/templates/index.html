@@ -9,7 +9,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coffee Ordering</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
 <main>
@@ -24,7 +24,6 @@
             </form>
         </div>
 
-<<<<<<< HEAD
         <!-- Coffee Table -->
         <div class="table-container">
             <table>
@@ -53,9 +52,9 @@
                     <td th:text="'₱' + ${coffee.price}"></td>
                     <td th:text="${coffee.roastLevel}"></td>
                     <td th:text="${coffee.origin}"></td>
-                    <td th:text="${coffee.decaf} ? 'Yes' : 'No'"></td>
+                    <td th:text="${coffee.isDecaf ? 'Yes' : 'No'}"></td>
                     <td th:text="${coffee.stock}"></td>
-                    <td th:text="${coffee.flavorNotes}"></td>
+                    <td th:text="${coffee.flavorNotes != null ? #strings.arrayJoin(coffee.flavorNotes, ', ') : 'No flavor notes'}"></td>
                     <td th:text="${coffee.brewMethod}"></td>
                     <td class="action-links">
                         <a th:href="@{/coffee/{id}(id=${coffee.id})}" class="view-btn">View</a>
@@ -64,48 +63,9 @@
                     </td>
                 </tr>
                 </tbody>
+
             </table>
         </div>
-=======
-        <table class="styled-table">
-            <thead>
-            <tr>
-                <th>No.</th>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Size</th>
-                <th>Price</th>
-                <th>Roast Level</th>
-                <th>Origin</th>
-                <th>Decaf</th>
-                <th>Stock</th>
-                <th>Flavor Notes</th>
-                <th>Brew Method</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="coffee, stat : ${coffees}">
-                <td>[[${stat.count}]]</td>
-                <td th:text="${coffee.name}"></td>
-                <td th:text="${coffee.type}"></td>
-                <td th:text="${coffee.size}"></td>
-                <td th:text="'$' + ${coffee.price}"></td>
-                <td th:text="${coffee.roastLevel}"></td>
-                <td th:text="${coffee.origin}"></td>
-                <td th:text="${coffee.isDecaf ? 'Yes' : 'No'}"></td>
-                <td th:text="${coffee.stock}"></td>
-                <td th:text="${coffee.flavorNotes != null ? #strings.arrayJoin(coffee.flavorNotes, ', ') : 'No flavor notes}"></td>
-                <td th:text="${coffee.brewMethod}"></td>
-                <td class="action-links">
-                    <a th:href="@{/coffee/{id}(id=${coffee.id})}" class="view-btn">View</a>
-                    <a th:href="@{/edit(id=${coffee.id})}" class="edit-btn">Edit</a>
-                    <a th:href="@{/delete(id=${coffee.id})}" class="delete-btn">Delete</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
->>>>>>> 2b201f0ce0eb0f90a72031f449d24ff717af3429
     </div>
 </main>
 </body>
