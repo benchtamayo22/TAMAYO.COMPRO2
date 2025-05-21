@@ -4,62 +4,68 @@
           content=~{::main},
           title=~{::title},
           link=~{::link}
-)}">
-
+      )}">
 <head>
-    <title>Coffee List</title>
-    <link rel="stylesheet" th:href="@{/style.css}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Ordering</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-
+<body>
 <main>
     <div class="container">
         <h1 class="page-title">Coffee Ordering</h1>
 
+        <!-- Search -->
         <div class="search-bar-container">
-            <form method="get" action="#" class="search-form">
-                <input type="text" name="search" class="search-bar" placeholder="Search coffee...">
+            <form class="search-form" th:action="@{/}" method="get">
+                <input type="text" name="search" placeholder="Search coffee..." class="search-bar">
                 <button type="submit" class="search-btn">Search</button>
             </form>
         </div>
 
-        <table class="styled-table">
-            <thead>
-            <tr>
-                <th>No.</th>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Size</th>
-                <th>Price</th>
-                <th>Roast Level</th>
-                <th>Origin</th>
-                <th>Decaf</th>
-                <th>Stock</th>
-                <th>Flavor Notes</th>
-                <th>Brew Method</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="coffee, stat : ${coffees}">
-                <td>[[${stat.count}]]</td>
-                <td th:text="${coffee.name}"></td>
-                <td th:text="${coffee.type}"></td>
-                <td th:text="${coffee.size}"></td>
-                <td th:text="'$' + ${coffee.price}"></td>
-                <td th:text="${coffee.roastLevel}"></td>
-                <td th:text="${coffee.origin}"></td>
-                <td th:text="${coffee.isDecaf ? 'Yes' : 'No'}"></td>
-                <td th:text="${coffee.stock}"></td>
-                <td th:text="${coffee.flavorNotes}"></td>
-                <td th:text="${coffee.brewMethod}"></td>
-                <td class="action-links">
-                    <a th:href="@{/coffee/{id}(id=${coffee.id})}" class="view-btn">View</a>
-                    <a th:href="@{/edit(id=${coffee.id})}" class="edit-btn">Edit</a>
-                    <a th:href="@{/delete(id=${coffee.id})}" class="delete-btn">Delete</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <!-- Coffee Table -->
+        <div class="table-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Size</th>
+                    <th>Price</th>
+                    <th>Roast Level</th>
+                    <th>Origin</th>
+                    <th>Decaf</th>
+                    <th>Stock</th>
+                    <th>Flavor Notes</th>
+                    <th>Brew Method</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="coffee, stat : ${coffees}">
+                    <td>[[${stat.count}]]</td>
+                    <td th:text="${coffee.name}"></td>
+                    <td th:text="${coffee.type}"></td>
+                    <td th:text="${coffee.size}"></td>
+                    <td th:text="'₱' + ${coffee.price}"></td>
+                    <td th:text="${coffee.roastLevel}"></td>
+                    <td th:text="${coffee.origin}"></td>
+                    <td th:text="${coffee.decaf} ? 'Yes' : 'No'"></td>
+                    <td th:text="${coffee.stock}"></td>
+                    <td th:text="${coffee.flavorNotes}"></td>
+                    <td th:text="${coffee.brewMethod}"></td>
+                    <td class="action-links">
+                        <a th:href="@{/coffee/{id}(id=${coffee.id})}" class="view-btn">View</a>
+                        <a th:href="@{/edit(id=${coffee.id})}" class="edit-btn">Edit</a>
+                        <a th:href="@{/delete(id=${coffee.id})}" class="delete-btn">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </main>
+</body>
 </html>

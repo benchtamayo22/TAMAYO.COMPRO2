@@ -1,130 +1,50 @@
-<!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{layout/main :: html(content=~{::main}, link=~{::link}, title=~{::title})}">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      th:replace="~{layout/main :: html(
+          content=~{::main},
+          title=~{::title},
+          link=~{::link}
+)}">
 <head>
-    <link rel="stylesheet" th:href="@{/form.css}">
     <title>Edit Coffee</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 
 <main>
-    <h1 th:text="'Edit ' + ${coffee.name}"></h1>
-    <div>
+    <div class="container">
+        <h1>Edit Coffee</h1>
         <form th:action="@{/update}" th:object="${coffee}" method="post">
             <input type="hidden" th:field="*{id}" />
-            <input type="hidden" th:field="*{coffeePicture}" />
 
-            <div>
-                <label for="name">Name:</label>
-                <input type="text" id="name" th:field="*{name}" placeholder="Enter coffee name"
-                       th:classappend="${#fields.hasErrors('name')} ? 'error' : ''">
-                <p class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
-            </div>
-
-            <div>
-                <label for="type">Type:</label>
-                <select id="type" th:field="*{type}">
-                    <option value="" disabled selected>-- Please Select --</option>
+            <label>Name: <input type="text" th:field="*{name}" /></label><br/>
+            <label>Type:
+                <select th:field="*{type}">
                     <option th:each="type : ${types}" th:value="${type}" th:text="${type}"></option>
                 </select>
-            </div>
-
-            <div>
-                <label for="size">Size:</label>
-                <select id="size" th:field="*{size}">
-                    <option value="" disabled selected>-- Please Select --</option>
+            </label><br/>
+            <label>Size:
+                <select th:field="*{size}">
                     <option th:each="size : ${sizes}" th:value="${size}" th:text="${size}"></option>
                 </select>
-            </div>
-
-            <div>
-                <label for="price">Price:</label>
-                <input type="number" step="0.01" id="price" th:field="*{price}"
-                       th:classappend="${#fields.hasErrors('price')} ? 'error' : ''">
-                <p class="error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>
-            </div>
-
-            <div>
-                <label for="roastLevel">Roast Level:</label>
-                <select id="roastLevel" th:field="*{roastLevel}">
-                    <option value="" disabled selected>-- Please Select --</option>
-                    <option th:each="level : ${roastLevels}" th:value="${level}" th:text="${level}"></option>
+            </label><br/>
+            <label>Price: <input type="number" step="0.01" th:field="*{price}" /></label><br/>
+            <label>Roast Level:
+                <select th:field="*{roastLevel}">
+                    <option th:each="roast : ${roastLevels}" th:value="${roast}" th:text="${roast}"></option>
                 </select>
-            </div>
-
-            <div>
-                <label for="origin">Origin:</label>
-                <input type="text" id="origin" th:field="*{origin}"
-                       th:classappend="${#fields.hasErrors('origin')} ? 'error' : ''">
-                <p class="error" th:if="${#fields.hasErrors('origin')}" th:errors="*{origin}"></p>
-            </div>
-
-            <div>
-                <label for="isDecaf">Decaf:</label>
-                <select id="isDecaf" th:field="*{decaf}" th:classappend="${#fields.hasErrors('decaf')} ? 'error' : ''">
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
-                </select>
-                <p class="error" th:if="${#fields.hasErrors('decaf')}" th:errors="*{decaf}"></p>
-            </div>
-
-            <div>
-                <label for="stock">Stock:</label>
-                <input type="number" id="stock" th:field="*{stock}"
-                       th:classappend="${#fields.hasErrors('stock')} ? 'error' : ''">
-                <p class="error" th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}"></p>
-            </div>
-
-            <div>
-                <label class="flavor-label">Flavor Notes:</label>
-                <div class="checkbox-group">
-                    <label class="checkbox-item">
-                        <input type="checkbox" name="flavorNotes" value="Chocolate"
-                               th:checked="${coffee.flavorNotes != null} ? ${#strings.contains(coffee.flavorNotes, 'Chocolate')} : false" />
-                        Chocolate
-                    </label>
-                    <label class="checkbox-item">
-                        <input type="checkbox" name="flavorNotes" value="Mint"
-                               th:checked="${coffee.flavorNotes != null} ? ${#strings.contains(coffee.flavorNotes, 'Mint')} : false" />
-                        Mint
-                    </label>
-                    <label class="checkbox-item">
-                        <input type="checkbox" name="flavorNotes" value="Herbal"
-                               th:checked="${coffee.flavorNotes != null} ? ${#strings.contains(coffee.flavorNotes, 'Herbal')} : false" />
-                        Herbal
-                    </label>
-                    <label class="checkbox-item">
-                        <input type="checkbox" name="flavorNotes" value="Roasted"
-                               th:checked="${coffee.flavorNotes != null} ? ${#strings.contains(coffee.flavorNotes, 'Roasted')} : false" />
-                        Roasted
-                    </label>
-                    <label class="checkbox-item">
-                        <input type="checkbox" name="flavorNotes" value="Caramel"
-                               th:checked="${coffee.flavorNotes != null} ? ${#strings.contains(coffee.flavorNotes, 'Caramel')} : false" />
-                        Caramel
-                    </label>
-                    <label class="checkbox-item">
-                        <input type="checkbox" name="flavorNotes" value="Nutty"
-                               th:checked="${coffee.flavorNotes != null} ? ${#strings.contains(coffee.flavorNotes, 'Nutty')} : false" />
-                        Nutty
-                    </label>
-                </div>
-
-            </div>
-
-            <div>
-                <label for="brewMethods">Brew Method:</label>
-                <select id="brewMethods" th:field="*{brewMethod}">
-                    <option value="" disabled selected>-- Please Select --</option>
+            </label><br/>
+            <label>Origin: <input type="text" th:field="*{origin}" /></label><br/>
+            <label>Decaf: <input type="checkbox" th:field="*{decaf}" /></label><br/>
+            <label>Stock: <input type="number" th:field="*{stock}" /></label><br/>
+            <label>Brew Method:
+                <select th:field="*{brewMethod}">
                     <option th:each="method : ${brewMethods}" th:value="${method}" th:text="${method}"></option>
                 </select>
-            </div>
+            </label><br/>
+            <label>Flavor Notes (comma-separated): <input type="text" name="flavorNotes" th:value="${coffee.flavorNotes}" /></label><br/>
 
-            <div class="action">
-                <a href="/" class="button-cancel">Back to List</a>
-                <button type="submit" class="button">Submit</button>
-            </div>
+            <button type="submit">Update Coffee</button>
         </form>
     </div>
 </main>
-
 </html>
