@@ -4,6 +4,7 @@ import com.btamayo.CoffeeTester.models.Coffee;
 import org.springframework.stereotype.Service;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -121,13 +122,11 @@ public class CoffeeService {
                 bw.newLine();
             }
         } catch (IOException e) {
-            System.out.println("Uh-oh! Error writing: " + e.getMessage());
+            System.err.println("Error writing to file: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
-    /**
-     * Loads coffee data from the CSV file if it exists.
-     */
     public void readFromDisk() {
         File file = new File(FILE_NAME);
         if (!file.exists()) {
@@ -154,17 +153,17 @@ public class CoffeeService {
                 c.setBrewMethod(data[9]);
                 c.setCoffeePicture(data[10]);
 
-                // Handle FlavorNotes
                 if (data.length >= 12 && !data[11].isEmpty()) {
-                    c.setFlavorNotes(data[11].trim());
+                    c.setFlavorNotes(Arrays.asList(data[11].split(";")));
                 } else {
-                    c.setFlavorNotes(""); // Empty string if no flavor notes
+                    c.setFlavorNotes(new ArrayList<>()); // Empty list if no flavor notes
                 }
 
                 coffees.add(c);
             }
         } catch (IOException e) {
-            System.out.println("Uh-oh! Error reading: " + e.getMessage());
+            System.err.println("Error reading from file: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

@@ -10,12 +10,14 @@
     <h1>New Coffee</h1>
     <div>
         <form th:action="@{/save}" th:object="${coffee}" method="POST" enctype="multipart/form-data">
+            <!-- Name -->
             <div class="form-row">
                 <label for="name">Name:</label>
                 <input type="text" id="name" th:field="*{name}" placeholder="Enter coffee name"
                        th:classappend="${#fields.hasErrors('name')} ? 'error' : ''">
             </div>
 
+            <!-- Type -->
             <div class="form-row">
                 <label for="type">Type:</label>
                 <select id="type" th:field="*{type}">
@@ -24,6 +26,7 @@
                 </select>
             </div>
 
+            <!-- Size -->
             <div class="form-row">
                 <label for="size">Size:</label>
                 <select id="size" th:field="*{size}">
@@ -32,11 +35,13 @@
                 </select>
             </div>
 
+            <!-- Price -->
             <div class="form-row">
                 <label for="price">Price:</label>
                 <input type="number" step="0.01" id="price" th:field="*{price}">
             </div>
 
+            <!-- Roast Level -->
             <div class="form-row">
                 <label for="roastLevel">Roast Level:</label>
                 <select id="roastLevel" th:field="*{roastLevel}">
@@ -45,34 +50,38 @@
                 </select>
             </div>
 
+            <!-- Origin -->
             <div class="form-row">
                 <label for="origin">Origin:</label>
                 <input type="text" id="origin" th:field="*{origin}">
             </div>
 
+            <!-- Decaf -->
             <div class="form-row checkbox-row">
                 <label for="isDecaf">Decaf:</label>
                 <input type="checkbox" id="isDecaf" th:field="*{decaf}">
             </div>
 
+            <!-- Stock -->
             <div class="form-row">
                 <label for="stock">Stock:</label>
                 <input type="number" id="stock" th:field="*{stock}">
             </div>
 
+            <!-- Flavor Notes -->
             <div class="form-row">
                 <label class="flavor-label">Flavor Notes:</label>
                 <div class="checkbox-group">
-                    <label><input type="checkbox" name="flavor" value="chocolate"> Chocolate</label>
-                    <label><input type="checkbox" name="flavor" value="roasted"> Roasted</label>
-                    <label><input type="checkbox" name="flavor" value="mint"> Mint</label>
-                    <label><input type="checkbox" name="flavor" value="caramel"> Caramel</label>
-                    <label><input type="checkbox" name="flavor" value="herbal"> Herbal</label>
-                    <label><input type="checkbox" name="flavor" value="nutty"> Nutty</label>
+                    <label><input type="checkbox" th:field="*{flavorNotes}" value="chocolate"/> Chocolate</label>
+                    <label><input type="checkbox" th:field="*{flavorNotes}" value="roasted"/> Roasted</label>
+                    <label><input type="checkbox" th:field="*{flavorNotes}" value="mint"/> Mint</label>
+                    <label><input type="checkbox" th:field="*{flavorNotes}" value="caramel"/> Caramel</label>
+                    <label><input type="checkbox" th:field="*{flavorNotes}" value="herbal"/> Herbal</label>
+                    <label><input type="checkbox" th:field="*{flavorNotes}" value="nutty"/> Nutty</label>
                 </div>
             </div>
 
-
+            <!-- Brew Method -->
             <div class="form-row">
                 <label for="brewMethods">Brew Method:</label>
                 <select id="brewMethods" th:field="*{brewMethod}">
@@ -81,6 +90,7 @@
                 </select>
             </div>
 
+            <!-- Image Upload -->
             <div class="form-row">
                 <label for="imageFile">Profile Picture:</label>
                 <div class="file-input">
@@ -90,6 +100,7 @@
                 </div>
             </div>
 
+            <!-- Actions -->
             <div class="action">
                 <a href="/" class="button-cancel">Back to List</a>
                 <button type="submit" class="button">Submit</button>
@@ -99,11 +110,7 @@
     <script>
         document.getElementById('imageFile').addEventListener('change', function() {
             const fileNameSpan = document.getElementById('imageFile-name');
-            if (this.files.length > 0) {
-                fileNameSpan.textContent = this.files[0].name;
-            } else {
-                fileNameSpan.textContent = 'No file chosen';
-            }
+            fileNameSpan.textContent = this.files.length > 0 ? this.files[0].name : 'No file chosen';
         });
     </script>
 </main>

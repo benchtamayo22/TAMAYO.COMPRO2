@@ -5,10 +5,9 @@ import jakarta.validation.constraints.NotBlank;
 public class CoffeeUser {
     @NotBlank(message = "Username should not be blank")
     private String username;
-    @NotBlank(message = "Password should not be blank")
+    @NotBlank(message = "Password is incorrect")
     private String password;
 
-    // Getters and setters
     public String getUsername() {
         return username;
     }
@@ -24,5 +23,4 @@ public class CoffeeUser {
     public void setPassword(String password) {
         this.password = password;
     }
-
 }

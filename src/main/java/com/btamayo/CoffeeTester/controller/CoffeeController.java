@@ -14,8 +14,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
-
+import java.util.stream.Collectors;
 
 @Controller
 public class CoffeeController {
@@ -35,42 +37,38 @@ public class CoffeeController {
         return "catalog";
     }
 
-
     @GetMapping("/home")
     public String home(Model model) {
         return "layout/main";
     }
 
-    /**
-     * Displays the home page with a list of coffees.
-     *
-     * @param search Search query to filter coffee entries.
-     * @param model  Model object for passing data to the view.
-     * @return Name of the Thymeleaf template to render.
-     */
     @GetMapping("/")
     public String index(@RequestParam(defaultValue = "") String search, Model model, HttpSession session) {
         CoffeeUser currentUser = (CoffeeUser) session.getAttribute("coffeeUser");
-        if(currentUser == null){
+        if (currentUser == null) {
             return "redirect:/login";
         }
 
-        model.addAttribute("coffees", coffeeService.searchCoffee(search));
+        List<Coffee> coffees = coffeeService.searchCoffee(search);
+
+        for (Coffee coffee : coffees) {
+            if (coffee.getFlavorNotes() != null) {
+                List<String> capitalizedFlavorNotes = coffee.getFlavorNotes().stream()
+                        .map(f -> f.substring(0, 1).toUpperCase() + f.substring(1))
+                        .collect(Collectors.toList());
+                coffee.setFlavorNotes(capitalizedFlavorNotes);
+            }
+        }
+
+        model.addAttribute("coffees", coffees);
         model.addAttribute("activeMenu", "home");
         return "index";
     }
 
-
-    /**
-     * Deletes a coffee entry by ID.
-     *
-     * @param id The ID of the coffee to delete.
-     * @return Redirects to the home page after deletion.
-     */
     @GetMapping("/delete")
     public String delete(@RequestParam int id, HttpSession session) {
         CoffeeUser currentUser = (CoffeeUser) session.getAttribute("coffeeUser");
-        if(currentUser == null){
+        if (currentUser == null) {
             return "redirect:/login";
         }
 
@@ -78,16 +76,10 @@ public class CoffeeController {
         return "redirect:/";
     }
 
-    /**
-     * Displays the add coffee form.
-     *
-     * @param model Model object for passing data to the view.
-     * @return Name of the Thymeleaf template to render.
-     */
     @GetMapping("/add")
     public String add(Model model, HttpSession session) {
         CoffeeUser currentUser = (CoffeeUser) session.getAttribute("coffeeUser");
-        if(currentUser == null){
+        if (currentUser == null) {
             return "redirect:/login";
         }
         model.addAttribute("coffee", new Coffee());
@@ -99,14 +91,6 @@ public class CoffeeController {
         return "add";
     }
 
-    /**
-     * Handles submission of the add coffee form.
-     *
-     * @param coffee         The Coffee object populated from the form.
-     * @param bindingResult  Validation result.
-     * @param model          Model object for passing data back to the view if there are errors.
-     * @return Redirects to the home page or reloads the add form on validation failure.
-     */
     @PostMapping("/save")
     public String store(@ModelAttribute("coffee") @Valid Coffee coffee,
                         BindingResult bindingResult,
@@ -125,7 +109,6 @@ public class CoffeeController {
             return "add";  // Make sure the 'add' template is loaded
         }
 
-        // Assign ID BEFORE handling the image
         coffee.setId(coffeeService.getLastId() + 1);
 
         // Handle image upload
@@ -149,45 +132,31 @@ public class CoffeeController {
         return "redirect:/";  // Redirect to the list page
     }
 
-
-
-    /**
-     * Displays the edit form for a specific coffee entry.
-     *
-     * @param id    The ID of the coffee to edit.
-     * @param model Model object for passing data to the view.
-     * @return Name of the Thymeleaf template to render, or redirect to home if coffee not found.
-     */
     @GetMapping("/edit")
     public String edit(@RequestParam int id, Model model, HttpSession session) {
         CoffeeUser currentUser = (CoffeeUser) session.getAttribute("coffeeUser");
-        if(currentUser == null){
+        if (currentUser == null) {
             return "redirect:/login";
         }
+
         Coffee coffee = coffeeService.getCoffee(id);
         if (coffee != null) {
+            String flavorNotesString = String.join(",", coffee.getFlavorNotes()); // Join flavor notes as a string
             model.addAttribute("coffee", coffee);
+            model.addAttribute("flavorNotesString", flavorNotesString); // Pass flavor notes as a string
             model.addAttribute("types", types);
             model.addAttribute("sizes", sizes);
             model.addAttribute("roastLevels", roastLevels);
             model.addAttribute("brewMethods", brewMethods);
             return "edit";
         }
-        return "redirect:/";
+        return "redirect:/"; // If coffee is not found, redirect to home page
     }
 
-    /**
-     * Handles submission of the edit coffee form.
-     *
-     * @param coffee         The updated Coffee object.
-     * @param bindingResult  Validation result.
-     * @param model          Model object for passing data back to the view if there are errors.
-     * @return Redirects to the home page or reloads the edit form on validation failure.
-     */
     @PostMapping("/update")
     public String update(@ModelAttribute("coffee") @Valid Coffee coffee,
                          BindingResult bindingResult,
-                         @RequestParam(value = "flavorNotes", required = false) String[] flavorNotes,
+                         @RequestParam(value = "flavorNotes", required = false) String flavorNotesString,
                          HttpSession session,
                          Model model) {
 
@@ -195,6 +164,10 @@ public class CoffeeController {
         if (currentUser == null) {
             return "redirect:/login";
         }
+
+        // Debugging
+        System.out.println("Received coffee: " + coffee);
+        System.out.println("flavorNotesString: " + flavorNotesString);
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("types", types);
@@ -211,11 +184,11 @@ public class CoffeeController {
                 coffee.setCoffeePicture(existing.getCoffeePicture());
             }
 
-            // Handle flavor notes
-            if (flavorNotes != null) {
-                coffee.setFlavorNotes(String.join(",", flavorNotes));
+            // Handle flavor notes (comma-separated string)
+            if (flavorNotesString != null && !flavorNotesString.isEmpty()) {
+                coffee.setFlavorNotes(Arrays.asList(flavorNotesString.split(",")));
             } else {
-                coffee.setFlavorNotes("");
+                coffee.setFlavorNotes(List.of()); // Ensure empty list if no flavor notes
             }
 
             coffeeService.updateCoffee(coffee.getId(), coffee);
@@ -230,5 +203,4 @@ public class CoffeeController {
         model.addAttribute("coffee", coffee);
         return "coffee"; // This should point to a Thymeleaf template named coffee.html
     }
-
 }

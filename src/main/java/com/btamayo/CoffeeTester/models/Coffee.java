@@ -4,6 +4,8 @@ import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
+import java.util.List;
+
 public class Coffee {
 
     private int id;
@@ -31,18 +33,18 @@ public class Coffee {
     @Min(value = 0, message = "Stock cannot be negative")
     private int stock;
 
-    private String flavorNotes;
+    private List<String> flavorNotes;
 
     @NotBlank(message = "Brew method is required")
     private String brewMethod;
 
     private String coffeePicture;
 
-
     public Coffee() {}
 
     public Coffee(int id, String name, String type, String size, double price, String roastLevel,
-                  String origin, boolean isDecaf, int stock, String flavorNotes, String brewMethod, String coffeePicture) {
+                  String origin, boolean isDecaf, int stock, List<String> flavorNotes,
+                  String brewMethod, String coffeePicture) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -57,100 +59,51 @@ public class Coffee {
         this.coffeePicture = coffeePicture;
     }
 
-    public int getId() {
-        return id;
-    }
+    public int getId() { return id; }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public void setId(int id) { this.id = id; }
 
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public void setName(String name) { this.name = name; }
 
-    public String getType() {
-        return type;
-    }
+    public String getType() { return type; }
 
-    public void setType(String type) {
-        this.type = type;
-    }
+    public void setType(String type) { this.type = type; }
 
-    public String getSize() {
-        return size;
-    }
+    public String getSize() { return size; }
 
-    public void setSize(String size) {
-        this.size = size;
-    }
+    public void setSize(String size) { this.size = size; }
 
-    public double getPrice() {
-        return price;
-    }
+    public double getPrice() { return price; }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
+    public void setPrice(double price) { this.price = price; }
 
-    public String getRoastLevel() {
-        return roastLevel;
-    }
+    public String getRoastLevel() { return roastLevel; }
 
-    public void setRoastLevel(String roastLevel) {
-        this.roastLevel = roastLevel;
-    }
+    public void setRoastLevel(String roastLevel) { this.roastLevel = roastLevel; }
 
-    public String getOrigin() {
-        return origin;
-    }
+    public String getOrigin() { return origin; }
 
-    public void setOrigin(String origin) {
-        this.origin = origin;
-    }
+    public void setOrigin(String origin) { this.origin = origin; }
 
-    public boolean isDecaf() {
-        return isDecaf;
-    }
+    public boolean isDecaf() { return isDecaf; }
 
-    public void setDecaf(boolean isDecaf) {
-        this.isDecaf = isDecaf;
-    }
+    public void setDecaf(boolean decaf) { isDecaf = decaf; }
 
-    public int getStock() {
-        return stock;
-    }
+    public int getStock() { return stock; }
 
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
+    public void setStock(int stock) { this.stock = stock; }
 
-    public String getFlavorNotes() {
-        return flavorNotes;
-    }
+    public List<String> getFlavorNotes() { return flavorNotes; }
 
-    public void setFlavorNotes(String flavorNotes) {
-        this.flavorNotes = flavorNotes;
-    }
+    public void setFlavorNotes(List<String> flavorNotes) { this.flavorNotes = flavorNotes; }
 
-    public String getBrewMethod() {
-        return brewMethod;
-    }
+    public String getBrewMethod() { return brewMethod; }
 
-    public void setBrewMethod(String brewMethod) {
-        this.brewMethod = brewMethod;
-    }
+    public void setBrewMethod(String brewMethod) { this.brewMethod = brewMethod; }
 
-    public String getCoffeePicture() {
-        return coffeePicture;
-    }
+    public String getCoffeePicture() { return coffeePicture; }
 
-    public void setCoffeePicture(String profilePicture) {
-        this.coffeePicture = profilePicture;
-    }
-
+    public void setCoffeePicture(String coffeePicture) { this.coffeePicture = coffeePicture; }
 }

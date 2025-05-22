@@ -217,4 +217,31 @@ h1 {
         overflow: visible;
     }
 
+    /* Add this to improve control */
+    .menu-label {
+      display: inline;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        grid-template-columns: 80px 1fr; /* narrow sidebar */
+      }
+
+      .brand span,
+      .menu-label,
+      .user-profile h1,
+      .user-profile span {
+        display: none !important;
+      }
+
+      .sidebar .menu li {
+        justify-content: center; /* center icons when text hidden */
+      }
+
+      .sidebar .menu li svg {
+        margin: 0 auto;
+      }
+    }
+
+
 }

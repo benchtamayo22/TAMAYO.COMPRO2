@@ -1,50 +1,110 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
-      th:replace="~{layout/main :: html(
-          content=~{::main},
-          title=~{::title},
-          link=~{::link}
-)}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/main :: html(content=~{::main}, link=~{::link}, title=~{::title})}">
 <head>
+    <link rel="stylesheet" th:href="@{/form.css}" />
     <title>Edit Coffee</title>
-    <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 
 <main>
-    <div class="container">
-        <h1>Edit Coffee</h1>
-        <form th:action="@{/update}" th:object="${coffee}" method="post">
+    <h1>Edit Coffee</h1>
+    <div>
+        <form th:action="@{/update}" th:object="${coffee}" method="POST" enctype="multipart/form-data">
             <input type="hidden" th:field="*{id}" />
 
-            <label>Name: <input type="text" th:field="*{name}" /></label><br/>
-            <label>Type:
-                <select th:field="*{type}">
+            <!-- Name -->
+            <div class="form-row">
+                <label for="name">Name:</label>
+                <input type="text" id="name" th:field="*{name}" placeholder="Enter coffee name"
+                       th:classappend="${#fields.hasErrors('name')} ? 'error' : ''">
+            </div>
+
+            <!-- Type -->
+            <div class="form-row">
+                <label for="type">Type:</label>
+                <select id="type" th:field="*{type}">
+                    <option value="" disabled>-- Please Select --</option>
                     <option th:each="type : ${types}" th:value="${type}" th:text="${type}"></option>
                 </select>
-            </label><br/>
-            <label>Size:
-                <select th:field="*{size}">
+            </div>
+
+            <!-- Size -->
+            <div class="form-row">
+                <label for="size">Size:</label>
+                <select id="size" th:field="*{size}">
+                    <option value="" disabled>-- Please Select --</option>
                     <option th:each="size : ${sizes}" th:value="${size}" th:text="${size}"></option>
                 </select>
-            </label><br/>
-            <label>Price: <input type="number" step="0.01" th:field="*{price}" /></label><br/>
-            <label>Roast Level:
-                <select th:field="*{roastLevel}">
-                    <option th:each="roast : ${roastLevels}" th:value="${roast}" th:text="${roast}"></option>
+            </div>
+
+            <!-- Price -->
+            <div class="form-row">
+                <label for="price">Price:</label>
+                <input type="number" step="0.01" id="price" th:field="*{price}">
+            </div>
+
+            <!-- Roast Level -->
+            <div class="form-row">
+                <label for="roastLevel">Roast Level:</label>
+                <select id="roastLevel" th:field="*{roastLevel}">
+                    <option value="" disabled>-- Please Select --</option>
+                    <option th:each="level : ${roastLevels}" th:value="${level}" th:text="${level}"></option>
                 </select>
-            </label><br/>
-            <label>Origin: <input type="text" th:field="*{origin}" /></label><br/>
-            <label>Decaf: <input type="checkbox" th:field="*{decaf}" /></label><br/>
-            <label>Stock: <input type="number" th:field="*{stock}" /></label><br/>
-            <label>Brew Method:
-                <select th:field="*{brewMethod}">
+            </div>
+
+            <!-- Origin -->
+            <div class="form-row">
+                <label for="origin">Origin:</label>
+                <input type="text" id="origin" th:field="*{origin}">
+            </div>
+
+            <!-- Decaf -->
+            <div class="form-row checkbox-row">
+                <label for="isDecaf">Decaf:</label>
+                <input type="checkbox" id="isDecaf" th:field="*{decaf}">
+            </div>
+
+            <!-- Stock -->
+            <div class="form-row">
+                <label for="stock">Stock:</label>
+                <input type="number" id="stock" th:field="*{stock}">
+            </div>
+
+            <!-- Flavor Notes -->
+            <div class="form-row">
+                <label class="flavor-label">Flavor Notes:</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" th:field="*{flavorNotes}" value="chocolate"/> Chocolate</label>
+                    <label><input type="checkbox" th:field="*{flavorNotes}" value="roasted"/> Roasted</label>
+                    <label><input type="checkbox" th:field="*{flavorNotes}" value="mint"/> Mint</label>
+                    <label><input type="checkbox" th:field="*{flavorNotes}" value="caramel"/> Caramel</label>
+                    <label><input type="checkbox" th:field="*{flavorNotes}" value="herbal"/> Herbal</label>
+                    <label><input type="checkbox" th:field="*{flavorNotes}" value="nutty"/> Nutty</label>
+                </div>
+            </div>
+
+            <!-- Brew Method -->
+            <div class="form-row">
+                <label for="brewMethods">Brew Method:</label>
+                <select id="brewMethods" th:field="*{brewMethod}">
+                    <option value="" disabled>-- Please Select --</option>
                     <option th:each="method : ${brewMethods}" th:value="${method}" th:text="${method}"></option>
                 </select>
-            </label><br/>
-            <label>Flavor Notes (comma-separated): <input type="text" name="flavorNotes" th:value="${coffee.flavorNotes}" /></label><br/>
+            </div>
 
-            <button type="submit">Update Coffee</button>
+            <!-- Actions -->
+            <div class="action">
+                <a href="/" class="button-cancel">Back to List</a>
+                <button type="submit" class="button">Update Coffee</button>
+            </div>
         </form>
     </div>
+    <script>
+        document.getElementById('imageFile').addEventListener('change', function() {
+            const fileNameSpan = document.getElementById('imageFile-name');
+            fileNameSpan.textContent = this.files.length > 0 ? this.files[0].name : 'No file chosen';
+        });
+    </script>
 </main>
+
 </html>
