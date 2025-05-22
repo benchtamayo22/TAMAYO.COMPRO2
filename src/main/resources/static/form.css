@@ -54,7 +54,7 @@ textarea {
     font-family: inherit;
     font-size: 1.05rem;
     line-height: 1.5;
-    transition: border 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    transition: var(--transition);
     background: #243a24;
     color: #f1f5f9;
 }
@@ -96,8 +96,8 @@ label.file-upload:hover {
 
 .checkbox-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 columns */
-    gap: 0.5rem 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.5rem 1rem;
     padding-top: 0.35rem;
 }
 
@@ -118,8 +118,6 @@ input[type="checkbox"] {
     vertical-align: middle;
 }
 
-
-
 select {
     appearance: none;
     -webkit-appearance: none;
@@ -132,9 +130,7 @@ select {
     cursor: pointer;
 }
 
-input[type="text"]:focus,
-input[type="date"]:focus,
-input[type="number"]:focus,
+input:focus,
 select:focus,
 textarea:focus {
     outline: none;
@@ -168,7 +164,7 @@ input[type="number"].error {
 }
 
 button,
-a {
+a.button {
     background: var(--accent);
     color: white;
     border: none;
@@ -180,10 +176,11 @@ a {
     transition: var(--transition);
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: inline-block;
 }
 
 button:hover,
-a:hover {
+a.button:hover {
     background: var(--accent-hover);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
     transform: translateY(-1px);
@@ -207,6 +204,12 @@ div.action {
     button,
     .button {
         width: 100%;
+    }
+
+    h1 {
+        font-size: 2rem;
+        text-align: center;
+        margin-top: 0;
     }
 }
 
@@ -247,11 +250,8 @@ div.action {
 }
 
 .checkbox-row {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-<<<<<<< HEAD
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
 }
-=======
-}
->>>>>>> 2b201f0ce0eb0f90a72031f449d24ff717af3429

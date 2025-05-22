@@ -146,3 +146,72 @@ body {
     background: var(--color-primary-hover);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
 }
+
+/* ✅ RESPONSIVE ENHANCEMENTS */
+@media (max-width: 768px) {
+    body {
+        padding: 1rem;
+    }
+
+    .coffee-card {
+        padding: 1.5rem;
+    }
+
+    .profile img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .profile h2 {
+        font-size: 1.5rem;
+    }
+
+    .profile p {
+        font-size: 0.95rem;
+    }
+
+    .details {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .details div span,
+    .details ul {
+        font-size: 0.95rem;
+    }
+
+    .button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile h2 {
+        font-size: 1.3rem;
+    }
+
+    .profile p {
+        font-size: 0.9rem;
+    }
+
+    .coffee-card {
+        padding: 1rem;
+    }
+
+    .details div {
+        padding: 1rem;
+    }
+
+    .details div strong {
+        font-size: 0.85rem;
+    }
+
+    .details div span {
+        font-size: 0.95rem;
+    }
+
+    .button {
+        font-size: 0.9rem;
+        padding: 0.65rem 1.2rem;
+    }
+}

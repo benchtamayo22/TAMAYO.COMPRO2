@@ -13,7 +13,7 @@
 <main th:fragment="main">
     <!-- Top Bar with Heading and Search -->
     <div class="top-bar">
-        <h1>Coffee List</h1>
+        <h1>Starbucks Coffee List</h1>
         <form th:action="@{/}" method="get">
             <input type="text" name="search" placeholder="Search..." />
             <button type="submit">Search</button>
@@ -22,7 +22,7 @@
 
     <!-- Table Section -->
     <div class="table-container">
-        <h2 style="margin-bottom: 1rem; color: #1e3932;">Available Coffees</h2>
+        <h2 style="margin-bottom: 1rem; color: #1e3932;">Available Starbucks Coffees</h2>
         <table>
             <thead>
             <tr>
@@ -46,7 +46,7 @@
                 <td th:text="${coffee.name}"></td>
                 <td th:text="${coffee.type}"></td>
                 <td th:text="${coffee.size}"></td>
-                <td th:text="'₱' + ${coffee.price}"></td>
+                <td th:text="'$' + ${coffee.price}"></td>
                 <td th:text="${coffee.roastLevel}"></td>
                 <td th:text="${coffee.origin}"></td>
                 <td th:text="${coffee.decaf} ? 'Yes' : 'No'"></td>

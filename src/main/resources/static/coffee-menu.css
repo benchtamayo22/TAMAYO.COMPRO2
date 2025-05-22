@@ -76,6 +76,7 @@ h1 {
     color: #d5e892;
     font-weight: 600;
     letter-spacing: 0.4px;
+    word-break: break-word;
 }
 
 .card-coffee p {
@@ -97,6 +98,12 @@ h1 {
 }
 
 /* === Responsive === */
+@media (max-width: 1024px) {
+    h1 {
+        font-size: 3rem;
+    }
+}
+
 @media (max-width: 768px) {
     .card-grid {
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -110,5 +117,53 @@ h1 {
 
     .coffee-image {
         height: 140px;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    .card-coffee h3 {
+        font-size: 1.2rem;
+    }
+
+    .card-coffee p,
+    .card-coffee strong {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    main {
+        padding: 1.5rem 0.75rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .card-grid {
+        gap: 1rem;
+    }
+
+    .card-coffee {
+        padding: 0.85rem;
+    }
+
+    .coffee-image {
+        height: 120px;
+    }
+
+    .card-coffee h3 {
+        font-size: 1.1rem;
+    }
+
+    .card-coffee p {
+        font-size: 0.9rem;
+    }
+
+    .card-coffee strong {
+        font-size: 0.9rem;
     }
 }

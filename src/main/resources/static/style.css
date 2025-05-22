@@ -10,6 +10,7 @@ body {
     background-color: #f6f5f3;
     color: #333;
     line-height: 1.6;
+    overflow-x: auto; /* Allow horizontal scroll globally if needed */
 }
 
 /* Header and Navigation */
@@ -20,10 +21,18 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 header h1 {
     font-size: 1.5rem;
+    word-break: break-word;
+}
+
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
 }
 
 nav a {
@@ -35,18 +44,18 @@ nav a {
     transition: background-color 0.3s;
 }
 
-nav a:hover, nav .active {
+nav a:hover,
+nav .active {
     background-color: #2d5546;
 }
 
-/* Main Content */
 main {
-    max-width: 1100px;
+    max-width: 2000px; /* Super wide */
     margin: 2rem auto;
     padding: 2rem;
     background-color: #ffffff;
     border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
 
 /* Coffee Catalog List */
@@ -60,7 +69,7 @@ main {
     background-color: #f8f8f8;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease;
 }
 
@@ -204,10 +213,14 @@ footer {
 
 .table-container {
     overflow-x: auto;
+    width: 100%;
+    max-width: 100%;
 }
 
 table {
     width: 100%;
+    min-width: 1800px; /* Now very wide to accommodate all columns well */
+    table-layout: fixed;
     border-collapse: collapse;
     margin-top: 1rem;
     font-size: 0.95rem;
@@ -218,7 +231,8 @@ table thead {
     color: #fff;
 }
 
-table th, table td {
+table th,
+table td {
     padding: 0.75rem 1rem;
     text-align: left;
     border-bottom: 1px solid #e2e8f0;
@@ -241,7 +255,27 @@ table a:hover {
     color: #14532d;
 }
 
-/* Responsive */
+/* Responsive Enhancements */
+@media (max-width: 1024px) {
+    .top-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .top-bar form {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    form .checkbox-group {
+        flex-direction: column;
+    }
+
+    table {
+        font-size: 0.85rem;
+    }
+}
+
 @media (max-width: 768px) {
     header {
         flex-direction: column;
@@ -249,12 +283,52 @@ table a:hover {
     }
 
     nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
         margin-top: 1rem;
     }
 
     .catalog {
         grid-template-columns: 1fr;
     }
+
+    .top-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .top-bar h1 {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    .top-bar form {
+        flex-direction: column;
+    }
+
+    .top-bar input[type="text"],
+    .top-bar button {
+        border-radius: 8px;
+        width: 100%;
+    }
 }
 
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.2rem;
+    }
 
+    nav a {
+        font-size: 0.9rem;
+        padding: 0.4rem 0.8rem;
+    }
+
+    .coffee-card-content h3 {
+        font-size: 1rem;
+    }
+
+    .coffee-card-content p {
+        font-size: 0.8rem;
+    }
+}
